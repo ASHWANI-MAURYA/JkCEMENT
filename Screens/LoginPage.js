@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet, Button } from 'react-native'
 import React, { useState } from 'react';
 import axios from "axios";
-const admin = ({ navigation }) => {
+const LoginPage = ({ navigation }) => {
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     let [isEmail, setIsEmail] = useState(null);
@@ -29,16 +29,30 @@ const admin = ({ navigation }) => {
         }
 
         try {
+            // debugger;
             //get data by api
             axios.post(`http://localhost:3000/api/get-UserData`, {
                 Email: Email,
                 Password: Password
             })
                 .then(res => {
-                    //debugger;
+                    // debugger;
                     let userInfo = res.data;
-                    console.log(userInfo);
-
+                    //console.log(userInfo);
+                    if(userInfo.getUserData.length)
+                    {
+                        // console.log(userInfo.getUserData[0].Password);
+                        navigation.navigate('AdminPanal',
+                        {
+                            UserId:userInfo.getUserData[0].Email,
+                            UserId:userInfo.getUserData[0].Password
+                        }
+                        );   
+                    }
+                    else{
+                        window.alert('Invalid Credentials!');
+                    }
+                    
                 })
                 .catch(e => {
                     console.log(`post error ${e}`);
@@ -50,7 +64,7 @@ const admin = ({ navigation }) => {
     };
     return (
         <View>
-            <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 30, marginHorizontal: 20 }}>Admin Login..</Text>
+            <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 30, marginHorizontal: 20 }}>Admin Login</Text>
             <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 10 }}>
                 <View style={style.ViewBok}>
                     <View style={{ marginHorizontal: 'auto' }}>
@@ -92,7 +106,7 @@ const admin = ({ navigation }) => {
     )
 }
 
-export default admin;
+export default LoginPage;
 const style = StyleSheet.create({
     inputBok: {
         borderWidth: 1,

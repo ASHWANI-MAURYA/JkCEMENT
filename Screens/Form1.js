@@ -1,20 +1,49 @@
-import { View, Text, TextInput, StyleSheet, Button, Alert } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Button, Alert, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Dropdown from '../Component/dropdown';
 import axios from "axios";
-const Form1 = ({ }) => {
+const Form1 = ({ route, props, navigation }) => {
     const [NameApplicant, setNameApplicant] = useState("");
     const [CertificateNumber, setCertificateNumber] = useState("");
     const [dataAwardCategorySelectionId, setdataAwardCategorySelectionId] = useState(null);
     let [isValidAwardCategory, setIsValidAwardCategory] = useState(null);
     let [isNameisValidate, setIsNameisValidate] = useState(null);
     let [IsCertificatenumber, setIsCertificatenumber] = useState(null);
+    let edit_id = route.params ? route.params.edit_id : null;
+    useEffect(() => {
+
+        if (edit_id) {
+
+            try {
+                //get  Data by api
+                axios.get(`http://localhost:3000/api/getById-form1Data/` + edit_id, {
+                })
+                    .then(res => {
+                        // debugger;
+                        // console.log(res.data);
+                        if (res.data) {
+                            setNameApplicant(res.data.NameApplicant);
+                            setCertificateNumber(res.data.CertificateNumber);
+                            setdataAwardCategorySelectionId(res.data.dataAwardCategorySelectionId);
+                        }
+
+                    })
+                    .catch(e => {
+                        console.log(`post error ${e}`);
+                    });
+            }
+            catch (error) {
+                console.log(error.message);
+            }
+        }
+    }, []);
+    // window.alert(edit_id);
     // Declare a new state variable, which we'll call "count"
     const [dataAwardCategory] = useState(function () {
         //Call API
         let api_data = [
-            { label: 'Item 1', value: '1' },
-            { label: 'Item 2', value: '2' },
+            { label: 'Item 1', value: 'Item 1' },
+            { label: 'Item 2', value: 'Item 2' },
         ];
         return api_data;
     });
@@ -24,8 +53,58 @@ const Form1 = ({ }) => {
     function funcClearData() {
         setNameApplicant("");
         setCertificateNumber("");
-        setdataAwardCategorySelectionId(null);
+        setdataAwardCategorySelectionId("2");
     };
+    function funcUpdateData() {
+        if (!dataAwardCategorySelectionId || dataAwardCategorySelectionId.value == "") {
+            setIsValidAwardCategory("false");
+            return;
+        }
+        else {
+            setIsValidAwardCategory("");
+        }
+
+        if (NameApplicant == "") {
+            setIsNameisValidate("false");
+            return;
+        }
+        else {
+            setIsNameisValidate("");
+        }
+        if (CertificateNumber == "") {
+            setIsCertificatenumber("false");
+            return;
+        }
+        else {
+            setIsCertificatenumber("");
+        }
+
+        // window.alert("This is Update Data alert");
+        //  console.log(edit_id._id);
+        //  window.alert(edit_id);
+        // navigation.navigate('AdminPanal');
+        //Save Data by api
+        // debugger;
+        axios.patch(`http://localhost:3000/api/post-form1UpdateData/`, {
+            _id:edit_id,
+            dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
+            NameApplicant: NameApplicant,
+            CertificateNumber: CertificateNumber
+        })
+            .then(res => {
+                console.log(res.data);
+                window.alert(res.data.Message);
+                navigation.navigate('AdminPanal',{editReload:true});
+                // debugger;
+                // let userInfo = res.data.Mesage;
+                // Alert.alert(userInfo);
+                // window.alert(userInfo);
+            })
+            .catch(e => {
+                console.log(`post error ${e}`);
+            });
+
+    }
     function funcSubmitData() {
         //Validation.....
         //#region This Code is used for validation perpose only
@@ -57,7 +136,7 @@ const Form1 = ({ }) => {
         try {
             //Save Data by api
             axios.post(`http://localhost:3000/api/post-form1-data`, {
-                dataAwardCategorySelectionId : dataAwardCategorySelectionId.label,
+                dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
                 NameApplicant: NameApplicant,
                 CertificateNumber: CertificateNumber
             })
@@ -100,7 +179,7 @@ const Form1 = ({ }) => {
                                 }
                             </Text>
                         </View>
-                        <TextInput placeholder='Name of the Architect (applicant) to be considered for Award' style={{ borderWidth: 1, borderColor: 'black', marginTop: 20, padding: 10 }} value={NameApplicant} onChangeText={setNameApplicant} />
+                        <TextInput placeholder='Name of the Architect (applicant) to be considered for Award' style={{ borderWidth: 1, borderColor: 'black', marginTop: 20, padding: 10 }} value={NameApplicant} onChangeText={setNameApplicant} maxLength={20} />
                         <View>
                             <Text style={{ fontWeight: '300', fontSize: 15, color: "red" }}>
                                 {
@@ -110,7 +189,7 @@ const Form1 = ({ }) => {
                                 }
                             </Text>
                         </View>
-                        <TextInput placeholder='Council of architechture or equivalent body Certificate number' style={{ borderWidth: 1, borderColor: 'black', marginTop: 30, padding: 10 }} onChangeText={setCertificateNumber} value={CertificateNumber} />
+                        <TextInput placeholder='Council of architechture or equivalent body Certificate number' style={{ borderWidth: 1, borderColor: 'black', marginTop: 30, padding: 10 }} onChangeText={setCertificateNumber} value={CertificateNumber} maxLength={20} />
                         <Text style={{ fontWeight: '300', fontSize: 15, color: "red" }}>
                             {
                                 IsCertificatenumber == "false"
@@ -126,8 +205,11 @@ const Form1 = ({ }) => {
                     <Button title='Clear' onPress={funcClearData} />
                 </View>
                 <View style={{ paddingHorizontal: 10 }}>
-                    <Button title='Submit' onPress={funcSubmitData} />
+                    <Button title={edit_id ? 'Update' : 'Submit'} onPress={edit_id ? funcUpdateData : funcSubmitData} />
                 </View>
+            </View>
+            <View style={{ justifyContent: 'center', alignSelf: 'center', marginTop: 10 }}>
+                <Button title='go to login page' onPress={() => navigation.navigate('LoginPage')} />
             </View>
 
         </View>
