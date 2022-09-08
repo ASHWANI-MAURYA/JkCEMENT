@@ -1,5 +1,5 @@
 import { View, Text, TextInput, StyleSheet, Button, Alert, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useFocusEffect } from 'react'
 import Dropdown from '../Component/dropdown';
 import axios from "axios";
 const Form1 = ({ route, props, navigation }) => {
@@ -10,8 +10,8 @@ const Form1 = ({ route, props, navigation }) => {
     let [isNameisValidate, setIsNameisValidate] = useState(null);
     let [IsCertificatenumber, setIsCertificatenumber] = useState(null);
     let edit_id = route.params ? route.params.edit_id : null;
-    useEffect(() => {
 
+    useEffect(() => {
         if (edit_id) {
 
             try {
@@ -36,7 +36,7 @@ const Form1 = ({ route, props, navigation }) => {
                 console.log(error.message);
             }
         }
-    }, []);
+    },[edit_id]);
     // window.alert(edit_id);
     // Declare a new state variable, which we'll call "count"
     const [dataAwardCategory] = useState(function () {
@@ -86,7 +86,7 @@ const Form1 = ({ route, props, navigation }) => {
         //Save Data by api
         // debugger;
         axios.patch(`http://localhost:3000/api/post-form1UpdateData/`, {
-            _id:edit_id,
+            _id: edit_id,
             dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
             NameApplicant: NameApplicant,
             CertificateNumber: CertificateNumber
@@ -94,7 +94,7 @@ const Form1 = ({ route, props, navigation }) => {
             .then(res => {
                 console.log(res.data);
                 window.alert(res.data.Message);
-                navigation.navigate('AdminPanal',{editReload:true});
+                navigation.navigate('AdminPanal', { editReload: true });
                 // debugger;
                 // let userInfo = res.data.Mesage;
                 // Alert.alert(userInfo);

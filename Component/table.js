@@ -79,11 +79,11 @@ function table(props,ref) {
 
               >
                 <View>
-                  <Text style={{ fontWeight: '500', marginTop: 3, fontSize: 16 }}>Award category</Text>
+                  {/* <Text style={{ fontWeight: '500', marginTop: 3, fontSize: 16 }}>Award category</Text> */}
                   <Text style={{ marginTop: 10 }}>{props.tableHead} </Text>
-                  <Text style={{ fontWeight: '500', marginTop: 10, fontSize: 16 }}>Applicant Name</Text>
+                  {/* <Text style={{ fontWeight: '500', marginTop: 10, fontSize: 16 }}>Applicant Name</Text> */}
                   <Text style={{ marginTop: 10 }}>{props.tableHead} </Text>
-                  <Text style={{ fontWeight: '500', marginTop: 10, fontSize: 16 }}>Certificate No.</Text>
+                  {/* <Text style={{ fontWeight: '500', marginTop: 10, fontSize: 16 }}>Certificate No.</Text> */}
                   <Text style={{ marginTop: 10 }}>{props.tableHead} </Text>
                 </View>
               </Pressable>

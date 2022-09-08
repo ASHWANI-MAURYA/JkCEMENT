@@ -27,6 +27,8 @@ const AdminPanal = ({ route, navigation }) => {
   {
     loadPageData();
   }
+  
+
   useEffect(() => {
     loadPageData();
   }, []);
