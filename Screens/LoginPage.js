@@ -31,7 +31,7 @@ const LoginPage = ({ navigation }) => {
         try {
             // debugger;
             //get data by api
-            axios.post(`http://localhost:3000/api/get-UserData`, {
+            axios.post(`http://192.168.185.78:3000/api/get-UserData`, {
                 Email: Email,
                 Password: Password
             })
@@ -69,7 +69,7 @@ const LoginPage = ({ navigation }) => {
                 <View style={style.ViewBok}>
                     <View style={{paddingVertical:10}}>
                         <Text style={{ fontWeight: '400', fontSize: 20}}>Email</Text>
-                        <TextInput placeholder='Email' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4}} value={Email} onChangeText={setEmail} />
+                        <TextInput placeholder='Email'keyboardType='email-address' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4}} value={Email} onChangeText={setEmail} />
                         <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
                                 isEmail == "false"
@@ -78,7 +78,7 @@ const LoginPage = ({ navigation }) => {
                             }
                         </Text>
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop:5 }}>Password</Text>
-                        <TextInput secureTextEntry={true} placeholder='Password' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4 }} value={Password} onChangeText={setPassword} />
+                        <TextInput secureTextEntry={true} keyboardType={'phone-pad'} placeholder='Password' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4 }} value={Password} onChangeText={setPassword} />
                         <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
                                 isPassword == "false"
@@ -88,20 +88,13 @@ const LoginPage = ({ navigation }) => {
                         </Text>
                     </View>
                 </View>
-                <View style={style.ViewBok}>
-                    <View style={{ width: 320 }}>
-                        
-                        
-                        
-                    </View>
-                </View>
             </View>
             <View style={{ marginHorizontal: 30,justifyContent: 'center', marginTop: 50 }}>
                 {/* <View style={{ paddingHorizontal: 10 }}> */}
-                <Pressable style={{backgroundColor: '#351431', padding: 6,marginVertical:5, borderRadius: 4, width: "auto",textAlign: 'center'}}onPress={submit} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Submit</Text></Pressable>
+                <Pressable style={{backgroundColor: '#351431', padding: 6,marginVertical:5, borderRadius: 4,textAlign: 'center'}}onPress={submit} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Submit</Text></Pressable>
                 {/* </View> */}
                 {/* <View style={{ paddingHorizontal: 10 }}> */}
-                <Pressable style={{backgroundColor: '#351431', padding: 6,marginVertical:5, borderRadius: 4, width: "auto",textAlign: 'center'}} onPress={reset} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Reset</Text></Pressable>
+                <Pressable style={{backgroundColor: '#351431', padding: 6,marginVertical:5, borderRadius: 4,textAlign: 'center'}} onPress={reset} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Reset</Text></Pressable>
                 {/* </View> */}
             </View>
 

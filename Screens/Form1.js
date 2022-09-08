@@ -16,7 +16,7 @@ const Form1 = ({ route, props, navigation }) => {
 
             try {
                 //get  Data by api
-                axios.get(`http://localhost:3000/api/getById-form1Data/` + edit_id, {
+                axios.get(`http://192.168.185.78:3000/api/getById-form1Data/` + edit_id, {
                 })
                     .then(res => {
                         // debugger;
@@ -53,7 +53,7 @@ const Form1 = ({ route, props, navigation }) => {
     function funcClearData() {
         setNameApplicant("");
         setCertificateNumber("");
-        setdataAwardCategorySelectionId("2");
+        setdataAwardCategorySelectionId("");
     };
     function funcUpdateData() {
         if (!dataAwardCategorySelectionId || dataAwardCategorySelectionId.value == "") {
@@ -85,7 +85,7 @@ const Form1 = ({ route, props, navigation }) => {
         // navigation.navigate('AdminPanal');
         //Save Data by api
         // debugger;
-        axios.patch(`http://localhost:3000/api/post-form1UpdateData/`, {
+        axios.patch(`http://192.168.185.78:3000/api/post-form1UpdateData/`, {
             _id: edit_id,
             dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
             NameApplicant: NameApplicant,
@@ -135,7 +135,7 @@ const Form1 = ({ route, props, navigation }) => {
         //debugger;
         try {
             //Save Data by api
-            axios.post(`http://localhost:3000/api/post-form1-data`, {
+            axios.post(`http://192.168.185.78:3000/api/post-form1-data`, {
                 dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
                 NameApplicant: NameApplicant,
                 CertificateNumber: CertificateNumber
@@ -143,8 +143,14 @@ const Form1 = ({ route, props, navigation }) => {
                 .then(res => {
                     //debugger;
                     let userInfo = res.data;
-                    Alert.alert(userInfo.Message);
-                    window.alert(userInfo.Message);
+                    Alert.alert(
+                        "Form (1)",
+                        userInfo.Message,
+                        [
+                          
+                          { text: "OK", onPress: () => funcClearData() }
+                        ]
+                      );
                 })
                 .catch(e => {
                     console.log(`post error ${e}`);
@@ -195,10 +201,10 @@ const Form1 = ({ route, props, navigation }) => {
                 </View>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
                     <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
-                        <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto", textAlign: 'center' }} onPress={funcClearData}><Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Clear</Text></Pressable>
+                        <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto", textAlign: 'center' }} onPress={edit_id ? funcUpdateData : funcSubmitData}><Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>{edit_id ? 'Update' : 'Submit'}</Text></Pressable>
                     </View>
                     <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
-                        <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto", textAlign: 'center' }} onPress={edit_id ? funcUpdateData : funcSubmitData}><Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>{edit_id ? 'Update' : 'Submit'}</Text></Pressable>
+                        <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto", textAlign: 'center' }} onPress={funcClearData}><Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Clear</Text></Pressable>
                     </View>
                 </View>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
