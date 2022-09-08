@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Button,Pressable } from 'react-native'
 import React, { useState } from 'react';
 import axios from "axios";
 const LoginPage = ({ navigation }) => {
@@ -64,17 +64,12 @@ const LoginPage = ({ navigation }) => {
     };
     return (
         <View>
-            <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 30, marginHorizontal: 20 }}>Admin Login</Text>
+            <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 10,padding:10}}>Admin Login</Text>
             <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 10 }}>
                 <View style={style.ViewBok}>
-                    <View style={{ marginHorizontal: 'auto' }}>
-                        <Text style={{ fontWeight: '300', fontSize: 20, marginTop: 20 }}>Email</Text>
-                        <Text style={{ fontWeight: '300', fontSize: 20, marginTop: 50 }}>Password.</Text>
-                    </View>
-                </View>
-                <View style={style.ViewBok}>
-                    <View style={{ width: 320 }}>
-                        <TextInput placeholder='Email' style={{ borderWidth: 1, borderColor: 'black', marginTop: 20, padding: 10 }} value={Email} onChangeText={setEmail} />
+                    <View style={{paddingVertical:10}}>
+                        <Text style={{ fontWeight: '400', fontSize: 20}}>Email</Text>
+                        <TextInput placeholder='Email' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4}} value={Email} onChangeText={setEmail} />
                         <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
                                 isEmail == "false"
@@ -82,7 +77,8 @@ const LoginPage = ({ navigation }) => {
                                     : ''
                             }
                         </Text>
-                        <TextInput secureTextEntry={true} placeholder='Password' style={{ borderWidth: 1, borderColor: 'black', marginTop: 30, padding: 10 }} value={Password} onChangeText={setPassword} />
+                        <Text style={{ fontWeight: '400', fontSize: 20, marginTop:5 }}>Password</Text>
+                        <TextInput secureTextEntry={true} placeholder='Password' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4 }} value={Password} onChangeText={setPassword} />
                         <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
                                 isPassword == "false"
@@ -92,14 +88,21 @@ const LoginPage = ({ navigation }) => {
                         </Text>
                     </View>
                 </View>
+                <View style={style.ViewBok}>
+                    <View style={{ width: 320 }}>
+                        
+                        
+                        
+                    </View>
+                </View>
             </View>
-            <View style={{ marginHorizontal: 30, flexDirection: 'row', justifyContent: 'center', marginTop: 50 }}>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Button title='Reset' onPress={reset} />
-                </View>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Button title='submit' onPress={submit} />
-                </View>
+            <View style={{ marginHorizontal: 30,justifyContent: 'center', marginTop: 50 }}>
+                {/* <View style={{ paddingHorizontal: 10 }}> */}
+                <Pressable style={{backgroundColor: '#351431', padding: 6,marginVertical:5, borderRadius: 4, width: "auto",textAlign: 'center'}}onPress={submit} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Submit</Text></Pressable>
+                {/* </View> */}
+                {/* <View style={{ paddingHorizontal: 10 }}> */}
+                <Pressable style={{backgroundColor: '#351431', padding: 6,marginVertical:5, borderRadius: 4, width: "auto",textAlign: 'center'}} onPress={reset} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Reset</Text></Pressable>
+                {/* </View> */}
             </View>
 
         </View>
@@ -115,6 +118,6 @@ const style = StyleSheet.create({
         marginTop: 10
     },
     ViewBok: {
-        width: '50%',
+        width: '100%',
     }
 });

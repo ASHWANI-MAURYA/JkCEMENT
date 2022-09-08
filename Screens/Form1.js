@@ -1,5 +1,5 @@
-import { View, Text, TextInput, StyleSheet, Button, Alert, Pressable } from 'react-native'
-import React, { useEffect, useState,useFocusEffect } from 'react'
+import { View, Text, TextInput, StyleSheet, Alert, Pressable, ScrollView } from 'react-native'
+import React, { useEffect, useState, useFocusEffect } from 'react'
 import Dropdown from '../Component/dropdown';
 import axios from "axios";
 const Form1 = ({ route, props, navigation }) => {
@@ -36,7 +36,7 @@ const Form1 = ({ route, props, navigation }) => {
                 console.log(error.message);
             }
         }
-    },[edit_id]);
+    }, [edit_id]);
     // window.alert(edit_id);
     // Declare a new state variable, which we'll call "count"
     const [dataAwardCategory] = useState(function () {
@@ -156,30 +156,23 @@ const Form1 = ({ route, props, navigation }) => {
 
     };
     return (
-        <View>
-            <Text style={{ textAlign: 'center', marginTop: 10 }}>Form(1) "Indian Architecture Award & Indian State Architecture Awards"</Text>
-            <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 10 }}>
-                <View style={style.ViewBok}>
-                    <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 30 }}>Award category</Text>
-                    <Text style={{ fontWeight: '500', fontSize: 20, marginTop: 20 }}>Applicant's Details</Text>
-                    <Text style={{ fontWeight: '300', fontSize: 20 }}>a.) Name of the Architect (applicant) to be considered for Award</Text>
-                    <View style={{ marginTop: 50 }}>
-                        <Text style={{ fontWeight: '300', fontSize: 20 }}>b.) Council of architechture or equivalent body Certificate number </Text>
-                    </View>
-                </View>
-                <View style={style.ViewBok}>
-                    <View>
+        <View style={{ flex: 1 }}>
+            <ScrollView style={{ marginBottom: 10 }}>
+                <Text style={{ textAlign: 'center', marginTop: 10, marginHorizontal: 10,fontSize:16 }}>Form(1) "Indian Architecture Award & Indian State Architecture Awards"</Text>
+                <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 5 }}>
+                    <View style={style.ViewBok}>
+                        <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 10 }}>Award category</Text>
                         <Dropdown bindDataAwardCategory={dataAwardCategory} my_value={dataAwardCategorySelectionId} my_onChangeText={setdataAwardCategorySelectionId} />
-                        <View>
-                            <Text style={{ fontWeight: '300', fontSize: 15, color: "red" }}>
-                                {
-                                    isValidAwardCategory == "false"
-                                        ? "Award Category selection is required!"
-                                        : ""
-                                }
-                            </Text>
-                        </View>
-                        <TextInput placeholder='Name of the Architect (applicant) to be considered for Award' style={{ borderWidth: 1, borderColor: 'black', marginTop: 20, padding: 10 }} value={NameApplicant} onChangeText={setNameApplicant} maxLength={20} />
+                        <Text style={{ fontWeight: '300', fontSize: 15, color: "red" }}>
+                            {
+                                isValidAwardCategory == "false"
+                                    ? "Award Category selection is required!"
+                                    : ""
+                            }
+                        </Text>
+                        <Text style={{ fontWeight: '500', fontSize: 20, marginTop: 5 }}>Applicant's Details</Text>
+                        <Text style={{ fontWeight: '300', margin: 16 }}>a.) Name of the Architect (applicant) to be considered for Award</Text>
+                        <TextInput placeholder='Name of the Architect (applicant) to be considered for Award' style={{ borderRadius: 4, borderWidth: 1, borderColor: 'black', padding: 10 }} value={NameApplicant} onChangeText={setNameApplicant} maxLength={20} />
                         <View>
                             <Text style={{ fontWeight: '300', fontSize: 15, color: "red" }}>
                                 {
@@ -189,7 +182,8 @@ const Form1 = ({ route, props, navigation }) => {
                                 }
                             </Text>
                         </View>
-                        <TextInput placeholder='Council of architechture or equivalent body Certificate number' style={{ borderWidth: 1, borderColor: 'black', marginTop: 30, padding: 10 }} onChangeText={setCertificateNumber} value={CertificateNumber} maxLength={20} />
+                        <Text style={{ fontWeight: '300', margin: 16 }}>b.) Council of architechture or equivalent body Certificate number </Text>
+                        <TextInput placeholder='Council of architechture or equivalent body Certificate number' style={{ borderRadius: 4, borderWidth: 1, borderColor: 'black', padding: 10 }} onChangeText={setCertificateNumber} value={CertificateNumber} maxLength={20} />
                         <Text style={{ fontWeight: '300', fontSize: 15, color: "red" }}>
                             {
                                 IsCertificatenumber == "false"
@@ -199,18 +193,21 @@ const Form1 = ({ route, props, navigation }) => {
                         </Text>
                     </View>
                 </View>
-            </View>
-            <View style={{ marginHorizontal: 30, flexDirection: 'row', justifyContent: 'center', marginTop: 50 }}>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Button title='Clear' onPress={funcClearData} />
+                <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
+                    <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
+                        <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto", textAlign: 'center' }} onPress={funcClearData}><Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Clear</Text></Pressable>
+                    </View>
+                    <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
+                        <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto", textAlign: 'center' }} onPress={edit_id ? funcUpdateData : funcSubmitData}><Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>{edit_id ? 'Update' : 'Submit'}</Text></Pressable>
+                    </View>
                 </View>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Button title={edit_id ? 'Update' : 'Submit'} onPress={edit_id ? funcUpdateData : funcSubmitData} />
+                <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
+                <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
+                        <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto" }} onPress={() => navigation.navigate('LoginPage')} ><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>login</Text></Pressable>
+                    </View>
                 </View>
-            </View>
-            <View style={{ justifyContent: 'center', alignSelf: 'center', marginTop: 10 }}>
-                <Button title='go to login page' onPress={() => navigation.navigate('LoginPage')} />
-            </View>
+
+            </ScrollView>
 
         </View>
     )
@@ -226,6 +223,6 @@ const style = StyleSheet.create({
     },
     ViewBok: {
         // flexDirection: 'row',
-        width: '50%',
+        width: '100%',
     }
 });
