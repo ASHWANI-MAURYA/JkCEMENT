@@ -56,12 +56,12 @@ router.get('/getAll-form1Data', async (req, res) => {
 router.get('/getAll-AwardCategory', async (req, res) => {
     try {
         const data = await AwardCategoryModel.find();
-        // let AwardCategoryFilterData = null;
-        // for(let i = 0;i<data.length;i++)
-        // {
-        //     AwardCategoryFilterData.push
-        // }
-        res.json(data);
+        var filterData = [];
+        for (var i = 0; i < data.length; i++) {
+        filterData.push({ label: data[i].name, value: data[i].name });
+        }
+        res.json(filterData);
+
     }
     catch (error) {
         res.status(500).json({ message: error.message })
@@ -156,7 +156,7 @@ router.patch('/post-form1UpdateData', async (req, res) => {
 
         const result = await Form1Model.updateOne(filter, updateDoc, options).exec();
 
-        res.status(200).json({Message : `Data updated successfully!` });
+        res.status(200).json({ Message: `Data updated successfully!` });
         // res.status(200).json(`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`);
 
 

@@ -10,13 +10,20 @@ const Form1 = ({ route, props, navigation }) => {
     let [isNameisValidate, setIsNameisValidate] = useState(null);
     let [IsCertificatenumber, setIsCertificatenumber] = useState(null);
     let edit_id = route.params ? route.params.edit_id : null;
-
+    const [dataAwardCategory,setdataAwardCategory] = useState(function () {
+        let api_data = [
+            { label: 'Item 1', value: 'Item 1' },
+            { label: 'Item 2', value: 'Item 2' },
+        ];
+        return api_data;
+    });
     useEffect(() => {
         if (edit_id) {
 
             try {
                 //get  Data by api
-                axios.get(`http://192.168.185.78:3000/api/getById-form1Data/` + edit_id, {
+                axios.get(`
+http://192.168.0.104:3000/api/getById-form1Data/` + edit_id, {
                 })
                     .then(res => {
                         // debugger;
@@ -36,20 +43,31 @@ const Form1 = ({ route, props, navigation }) => {
                 console.log(error.message);
             }
         }
+        try {
+            //get  Data by api
+            axios.get(`
+http://192.168.0.104:3000/api/getAll-AwardCategory`, {
+            })
+                .then(res => {
+                    debugger;
+                    console.log(res.data);
+                    // console.log(res.data[0].name);
+                    setdataAwardCategory(res.data);
+                })
+                .catch(e => {
+                    console.log(`post error ${e}`);
+                });
+        }
+        catch (error) {
+            console.log(error.message);
+        }
+        //Call API
+
     }, [edit_id]);
+    // console.log(Awardcategory)
     // window.alert(edit_id);
     // Declare a new state variable, which we'll call "count"
-    const [dataAwardCategory] = useState(function () {
-        //Call API
-        let api_data = [
-            { label: 'Item 1', value: 'Item 1' },
-            { label: 'Item 2', value: 'Item 2' },
-        ];
-        return api_data;
-    });
-
-
-
+   
     function funcClearData() {
         setNameApplicant("");
         setCertificateNumber("");
@@ -85,7 +103,8 @@ const Form1 = ({ route, props, navigation }) => {
         // navigation.navigate('AdminPanal');
         //Save Data by api
         // debugger;
-        axios.patch(`http://192.168.185.78:3000/api/post-form1UpdateData/`, {
+        axios.patch(`
+http://192.168.0.104:3000/api/post-form1UpdateData/`, {
             _id: edit_id,
             dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
             NameApplicant: NameApplicant,
@@ -94,16 +113,15 @@ const Form1 = ({ route, props, navigation }) => {
             .then(res => {
                 console.log(res.data);
                 window.alert(res.data.Message);
-                navigation.navigate('AdminPanal', { editReload: true });
-                // debugger;
-                // let userInfo = res.data.Mesage;
-                // Alert.alert(userInfo);
-                // window.alert(userInfo);
+                navigation.navigate('AdminPanal'
+
+                    // ,{ editReload: true } delete it if you no use !
+
+                );
             })
             .catch(e => {
                 console.log(`post error ${e}`);
             });
-
     }
     function funcSubmitData() {
         //Validation.....
@@ -135,7 +153,8 @@ const Form1 = ({ route, props, navigation }) => {
         //debugger;
         try {
             //Save Data by api
-            axios.post(`http://192.168.185.78:3000/api/post-form1-data`, {
+            axios.post(`
+http://192.168.0.104:3000/api/post-form1-data`, {
                 dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
                 NameApplicant: NameApplicant,
                 CertificateNumber: CertificateNumber
@@ -147,10 +166,10 @@ const Form1 = ({ route, props, navigation }) => {
                         "Form (1)",
                         userInfo.Message,
                         [
-                          
-                          { text: "OK", onPress: () => funcClearData() }
+
+                            { text: "OK", onPress: () => funcClearData() }
                         ]
-                      );
+                    );
                 })
                 .catch(e => {
                     console.log(`post error ${e}`);
@@ -159,12 +178,11 @@ const Form1 = ({ route, props, navigation }) => {
         catch (error) {
             console.log(error.message);
         }
-
     };
     return (
         <View style={{ flex: 1 }}>
             <ScrollView style={{ marginBottom: 10 }}>
-                <Text style={{ textAlign: 'center', marginTop: 10, marginHorizontal: 10,fontSize:16 }}>Form(1) "Indian Architecture Award & Indian State Architecture Awards"</Text>
+                <Text style={{ textAlign: 'center', marginTop: 10, marginHorizontal: 10, fontSize: 16 }}>Form(1) "Indian Architecture Award & Indian State Architecture Awards"</Text>
                 <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 5 }}>
                     <View style={style.ViewBok}>
                         <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 10 }}>Award category</Text>
@@ -208,7 +226,7 @@ const Form1 = ({ route, props, navigation }) => {
                     </View>
                 </View>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
-                <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
+                    <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
                         <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto" }} onPress={() => navigation.navigate('LoginPage')} ><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>login</Text></Pressable>
                     </View>
                 </View>

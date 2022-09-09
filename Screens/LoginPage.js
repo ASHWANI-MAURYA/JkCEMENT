@@ -31,7 +31,8 @@ const LoginPage = ({ navigation }) => {
         try {
             // debugger;
             //get data by api
-            axios.post(`http://192.168.185.78:3000/api/get-UserData`, {
+            axios.post(`
+http://192.168.0.104:3000/api/get-UserData`, {
                 Email: Email,
                 Password: Password
             })
@@ -69,7 +70,7 @@ const LoginPage = ({ navigation }) => {
                 <View style={style.ViewBok}>
                     <View style={{paddingVertical:10}}>
                         <Text style={{ fontWeight: '400', fontSize: 20}}>Email</Text>
-                        <TextInput placeholder='Email'keyboardType='email-address' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4}} value={Email} onChangeText={setEmail} />
+                        <TextInput placeholder='Email' keyboardType={'phone-pad'} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4}} value={Email} onChangeText={setEmail} />
                         <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
                                 isEmail == "false"

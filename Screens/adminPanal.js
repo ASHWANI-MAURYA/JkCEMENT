@@ -3,15 +3,19 @@ import Table from '../Component/table'
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 const AdminPanal = ({ route, navigation }) => {
-  const { UserId } = route.params;
+  // const { UserId } = route.params;
   // const { password } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
+  const [PopupData, setPopupData] = useState("");
 
   const [tableData, setTableData] = useState({
     tableHead: [],
     tableData: []
 
   });
+  // const sendDataToParent = (message: string) => {
+  //   getMessageFromChild(message);
+  // };
 
   // tableHead: ['Head', 'Head2', 'Head3', 'Head4'],
   // tableData: [
@@ -33,12 +37,13 @@ const AdminPanal = ({ route, navigation }) => {
   }, []);
   function loadPageData() {
     try {
-      axios.get(`http://192.168.185.78:3000/api/getAll-form1Data`, {
+      axios.get(`
+http://192.168.0.104:3000/api/getAll-form1Data`, {
       })
         .then(res => {
           // debugger;
           setTableData(res.data);
-          // console.log(res.data);
+          console.log(res.data);
           // console.log(route.params);
 
         })
@@ -51,10 +56,9 @@ const AdminPanal = ({ route, navigation }) => {
     }
   }
   function editFormData(val) {
-    // window.alert(val);
     Alert.alert(
       "Edit !",
-      "do you want to edit " + val,
+      "do you want to edit ",
       [
         {
           text: "Cancel",
@@ -70,15 +74,14 @@ const AdminPanal = ({ route, navigation }) => {
         }
       ]
     );
-
+//  window.alert(edit_id:);
   }
 
-  function cellcheck() {
-    // window.alert("alert item write in admin panal");
+  function chrckcell(rowData) {
     setModalVisible(true);
-  }
-
-
+    setPopupData(rowData)
+    console.log(rowData)
+  };
 
   function deleteFormData(val) {
     // console.log(val);
@@ -92,7 +95,8 @@ const AdminPanal = ({ route, navigation }) => {
           style: "cancel"
         },
         {
-          text: "OK", onPress: () => axios.delete(`http://192.168.185.78:3000/api/delete-Form1Data/` + val, {
+          text: "OK", onPress: () => axios.delete(`
+http://192.168.0.104:3000/api/delete-Form1Data/` + val, {
           })
             .then(res => {
               // debugger;
@@ -125,6 +129,10 @@ const AdminPanal = ({ route, navigation }) => {
   // function clickPopupClose(){
   //   window.alert("click Popup Close")
   // };
+  // function windowlog(){
+  //   console.log(tableData.tableHead[0])
+
+  // }
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -133,14 +141,13 @@ const AdminPanal = ({ route, navigation }) => {
           <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 30, marginHorizontal: 20 }} >Admin Panal</Text>
         </View>
         <View>
-          <Text style={{ fontWeight: '400', fontSize: 18, marginTop: 30, marginHorizontal: 20 }}>{UserId}</Text>
+          {/* <Text style={{ fontWeight: '400', fontSize: 18, marginTop: 30, marginHorizontal: 20 }}>{UserId}</Text> */}
         </View>
       </View>
       <Table
         deleteFormData={deleteFormData}
+        chrckcell={chrckcell}
         editFormData={editFormData}
-        click={cellcheck}
-
         tableHead={tableData.tableHead} tableData={tableData.tableData} />
 
       <View style={{ flex: 1 }}>
@@ -149,24 +156,25 @@ const AdminPanal = ({ route, navigation }) => {
           transparent={true}
           visible={modalVisible}
         >
-          <Pressable onPress={() => setModalVisible(!modalVisible)}>
-            <View style={styles.centeredView}>
-              <View style={styles.popup}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ fontWeight: '400', fontSize: 18, marginTop: 5, marginHorizontal: 20 }}>Award Category :</Text>
-                  <Text style={{ fontWeight: '400', fontSize: 18, marginTop: 5, marginHorizontal: 20 }}>{UserId}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ fontWeight: '400', fontSize: 18, marginTop: 5, marginHorizontal: 20 }}>Applicant Name :</Text>
-                  <Text style={{ fontWeight: '400', fontSize: 18, marginTop: 5, marginHorizontal: 20 }}>{UserId}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ fontWeight: '400', fontSize: 18, marginTop: 5, marginHorizontal: 20 }}>Certificate No :</Text>
-                  <Text style={{ fontWeight: '400', fontSize: 18, marginTop: 5, marginHorizontal: 20 }}>{UserId}</Text>
+          <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+            <Pressable onPress={() => setModalVisible(!modalVisible)} >
+              <View style={styles.centeredView}>
+                <View style={styles.popup}>
+                  <View style={{ backgroundColor: '#351401', marginBottom: 'auto', width: '100%', height: 50, borderTopRightRadius: 18, borderTopLeftRadius: 18 }}>
+                    <Text style={{ color: 'white', marginVertical: 15, marginLeft: 20, fontSize: 18 }}>View Details</Text>
+                  </View>
+                    <View style={{ marginBottom: 'auto' }}>
+                      <Text style={styles.heading}>{tableData.tableHead[0]}</Text>
+                      <Text style={styles.paragraph}>{PopupData[0]}</Text>
+                      <Text style={styles.heading}>{tableData.tableHead[1]}</Text>
+                      <Text style={styles.paragraph}>{PopupData[1]}</Text>
+                      <Text style={styles.heading}>{tableData.tableHead[2]}</Text>
+                      <Text style={styles.paragraph}>{PopupData[2]}</Text>
+                    </View>
                 </View>
               </View>
-            </View>
-          </Pressable>
+            </Pressable>
+          </View>
         </Modal>
       </View>
 
@@ -183,8 +191,15 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   popup: {
-    height: '80%', width: '80%', backgroundColor: 'green', justifyContent: "center",
-    alignItems: 'center', borderRadius: 20
+    height: '40%', width: '80%', backgroundColor: '#ffffff',
+    borderRadius: 20, borderWidth: 1,
+  },
+  heading:{
+    fontWeight: '600', color: '#000', marginVertical: 5, marginLeft: 20, fontSize: 18,textAlign:'center'
+  },
+  paragraph:{
+    fontWeight: '400', color: '#000', marginVertical:5,marginLeft: 20, fontSize: 16,textAlign:'center'
   }
+
 
 });
