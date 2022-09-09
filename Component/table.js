@@ -2,51 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Pressable, Text, TouchableOpacity } from 'react-native';
 import { Table, Row, TableWrapper, Cell } from 'react-native-table-component';
 function table(props) {
-
   const [modalVisible, setModalVisible] = useState(false);
-  // const element = function ( index,rowData) {
-  //   let data = rowData[rowData.length-1];
-  //    // if ((index + 1) === rowData.length) {
-  //    //   <>
-  //    //     <Cell onPress={chrckcell(rowData)} key={index} data={rowData[index]} textStyle={styles.text} />
-  //    //   </>
-  //    // }
-  //    // else {
-  //    //   <View style={{ marginVertical: 10, alignSelf: "center" }}>
-  //    //     <TouchableOpacity onPress={() => clickeditFormData(data)} >
-  //    //       <View style={styles.btn}>
-  //    //         <Text style={styles.btnText}>Edit</Text>
-  //    //       </View>
-  //    //     </TouchableOpacity>
-  //    //     <TouchableOpacity onPress={() => clickDeleteData(data)}>
-  //    //       <View style={styles.deletebtn}>
-  //    //         <Text style={styles.btnText}>Delete</Text>
-  //    //       </View>
-  //    //     </TouchableOpacity>
-  //    //   </View>
-  //    // }
-
-  //    <View style={{ marginVertical: 10, alignSelf: "center" }}>
-  //    <TouchableOpacity onPress={() => clickeditFormData(data)} >
-  //      <View style={styles.btn}>
-  //        <Text style={styles.btnText}>Edit</Text>
-  //      </View>
-  //    </TouchableOpacity>
-  //    <TouchableOpacity onPress={() => clickDeleteData(data)}>
-  //      <View style={styles.deletebtn}>
-  //        <Text style={styles.btnText}>Delete</Text>
-  //      </View>
-  //    </TouchableOpacity>
-  //  </View>
-  //  }
-
   const element = (data, index) => (
     <>
-      {
-        // (index === 1) ? (<Cell  key={index} data={1} textStyle={styles.text} />) : ('')
-      }
-      {/* <Cell  key={index} data={1} textStyle={styles.text} /> */}
-
       <View style={{ marginVertical: 10, alignSelf: "center" }}>
         <TouchableOpacity onPress={() => clickeditFormData(data)} >
           <View style={styles.btn}>

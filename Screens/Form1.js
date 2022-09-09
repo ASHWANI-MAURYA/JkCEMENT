@@ -50,7 +50,7 @@ http://192.168.0.104:3000/api/getAll-AwardCategory`, {
             })
                 .then(res => {
                     debugger;
-                    console.log(res.data);
+                    // console.log(res.data);
                     // console.log(res.data[0].name);
                     setdataAwardCategory(res.data);
                 })
