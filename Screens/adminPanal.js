@@ -38,7 +38,7 @@ const AdminPanal = ({ route, navigation }) => {
   function loadPageData() {
     try {
       axios.get(`
-http://192.168.0.104:3000/api/getAll-form1Data`, {
+http://192.168.225.78:3000/api/getAll-form1Data`, {
       })
         .then(res => {
           // debugger;
@@ -96,7 +96,7 @@ http://192.168.0.104:3000/api/getAll-form1Data`, {
         },
         {
           text: "OK", onPress: () => axios.delete(`
-http://192.168.0.104:3000/api/delete-Form1Data/` + val, {
+http://192.168.225.78:3000/api/delete-Form1Data/` + val, {
           })
             .then(res => {
               // debugger;

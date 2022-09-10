@@ -2,7 +2,7 @@ import { View, Text, TextInput, StyleSheet, Alert, Pressable, ScrollView } from 
 import React, { useEffect, useState, useFocusEffect } from 'react'
 import Dropdown from '../Component/dropdown';
 import axios from "axios";
-const Form1 = ({ route, props, navigation }) => {
+const EducationCategory = ({ route, props, navigation }) => {
     const [NameApplicant, setNameApplicant] = useState("");
     const [CertificateNumber, setCertificateNumber] = useState("");
     const [dataAwardCategorySelectionId, setdataAwardCategorySelectionId] = useState(null);
@@ -23,7 +23,7 @@ const Form1 = ({ route, props, navigation }) => {
             try {
                 //get  Data by api
                 axios.get(`
-http://192.168.0.104:3000/api/getById-form1Data/` + edit_id, {
+http://192.168.225.78:3000/api/getById-form1Data/` + edit_id, {
                 })
                     .then(res => {
                         // debugger;
@@ -46,7 +46,7 @@ http://192.168.0.104:3000/api/getById-form1Data/` + edit_id, {
         try {
             //get  Data by api
             axios.get(`
-http://192.168.0.104:3000/api/getAll-AwardCategory`, {
+http://192.168.225.78:3000/api/getAll-AwardCategory`, {
             })
                 .then(res => {
                     debugger;
@@ -104,7 +104,7 @@ http://192.168.0.104:3000/api/getAll-AwardCategory`, {
         //Save Data by api
         // debugger;
         axios.patch(`
-http://192.168.0.104:3000/api/post-form1UpdateData/`, {
+http://192.168.225.78:3000/api/post-form1UpdateData/`, {
             _id: edit_id,
             dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
             NameApplicant: NameApplicant,
@@ -154,7 +154,7 @@ http://192.168.0.104:3000/api/post-form1UpdateData/`, {
         try {
             //Save Data by api
             axios.post(`
-http://192.168.0.104:3000/api/post-form1-data`, {
+http://192.168.225.78:3000/api/post-form1-data`, {
                 dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
                 NameApplicant: NameApplicant,
                 CertificateNumber: CertificateNumber
@@ -185,7 +185,7 @@ http://192.168.0.104:3000/api/post-form1-data`, {
                 <Text style={{ textAlign: 'center', marginTop: 10, marginHorizontal: 10, fontSize: 16 }}>Form(1) "Indian Architecture Award & Indian State Architecture Awards"</Text>
                 <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 5 }}>
                     <View style={style.ViewBok}>
-                        <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 10 }}>Award category</Text>
+                        <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 10 }}>Education Category</Text>
                         <Dropdown bindDataAwardCategory={dataAwardCategory} my_value={dataAwardCategorySelectionId} my_onChangeText={setdataAwardCategorySelectionId} />
                         <Text style={{ fontWeight: '300', fontSize: 15, color: "red" }}>
                             {

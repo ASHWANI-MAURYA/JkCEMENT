@@ -14,7 +14,7 @@ const App = () => {
     <NavigationContainer>
       <StatusBar style="light" />
       <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#351401' }, headerTintColor: 'white', }}>
-        <Stack.Screen name='form1' component={form1} options={{ title: 'Form 1' }} />
+        <Stack.Screen name='form1' component={form1} options={{ title: 'Education Registration' }} />
         <Stack.Screen name='AdminPanal' component={AdminPanal} options={{ title: 'Admin Panal' }} />
         <Stack.Screen name='LoginPage' component={LoginPage} options={{ title: 'Login' }} />
       </Stack.Navigator>
