@@ -10,7 +10,7 @@ const EducationCategory = ({ route, props, navigation }) => {
     let [isNameisValidate, setIsNameisValidate] = useState(null);
     let [IsCertificatenumber, setIsCertificatenumber] = useState(null);
     let edit_id = route.params ? route.params.edit_id : null;
-    const [dataAwardCategory,setdataAwardCategory] = useState(function () {
+    const [dataAwardCategory, setdataAwardCategory] = useState(function () {
         let api_data = [
             { label: 'Item 1', value: 'Item 1' },
             { label: 'Item 2', value: 'Item 2' },
@@ -67,7 +67,7 @@ http://192.168.225.78:3000/api/getAll-AwardCategory`, {
     // console.log(Awardcategory)
     // window.alert(edit_id);
     // Declare a new state variable, which we'll call "count"
-   
+
     function funcClearData() {
         setNameApplicant("");
         setCertificateNumber("");
@@ -237,7 +237,7 @@ http://192.168.225.78:3000/api/post-form1-data`, {
     )
 }
 
-export default Form1;
+export default EducationCategory;
 const style = StyleSheet.create({
     inputBok: {
         borderWidth: 1,
