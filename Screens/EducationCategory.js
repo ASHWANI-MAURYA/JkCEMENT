@@ -1,7 +1,8 @@
-import { View, Text, TextInput, StyleSheet, Alert, Pressable, ScrollView } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Alert, Pressable, ScrollView, Button } from 'react-native'
 import React, { useEffect, useState, useFocusEffect } from 'react'
 import Dropdown from '../Component/dropdown';
 import axios from "axios";
+import Date from '../Component/dateinput';
 const EducationCategory = ({ route, props, navigation }) => {
     const [NameApplicant, setNameApplicant] = useState("");
     const [CertificateNumber, setCertificateNumber] = useState("");
@@ -12,18 +13,46 @@ const EducationCategory = ({ route, props, navigation }) => {
     let edit_id = route.params ? route.params.edit_id : null;
     const [dataAwardCategory, setdataAwardCategory] = useState(function () {
         let api_data = [
-            { label: 'Item 1', value: 'Item 1' },
-            { label: 'Item 2', value: 'Item 2' },
+            { label: 'Istitute', value: 'Istitute' },
+            { label: 'School', value: 'School' },
         ];
         return api_data;
     });
+    const [date, setDate] = useState('');
+    let dateInput = null;
+
+    const handleChange = (date) => {
+        setDate(date);
+    };
+
+    const focus = () => {
+        if (!dateInput) {
+            return;
+        }
+
+        dateInput.focus();
+    };
+    // const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    // // const [Date,setDate]=useState('')
+    // const showDatePicker = () => {
+    //     setDatePickerVisibility(true);
+    // };
+
+    // const hideDatePicker = () => {
+    //     setDatePickerVisibility(false);
+    // };
+
+    // const handleConfirm = date => {
+    //     setDate(date)
+    //     hideDatePicker();
+    // };
     useEffect(() => {
         if (edit_id) {
 
             try {
                 //get  Data by api
                 axios.get(`
-http://192.168.225.78:3000/api/getById-form1Data/` + edit_id, {
+http://192.168.0.104:3000/api/getById-form1Data/` + edit_id, {
                 })
                     .then(res => {
                         // debugger;
@@ -46,7 +75,7 @@ http://192.168.225.78:3000/api/getById-form1Data/` + edit_id, {
         try {
             //get  Data by api
             axios.get(`
-http://192.168.225.78:3000/api/getAll-AwardCategory`, {
+http://192.168.0.104:3000/api/getAll-AwardCategory`, {
             })
                 .then(res => {
                     debugger;
@@ -104,7 +133,7 @@ http://192.168.225.78:3000/api/getAll-AwardCategory`, {
         //Save Data by api
         // debugger;
         axios.patch(`
-http://192.168.225.78:3000/api/post-form1UpdateData/`, {
+http://192.168.0.104:3000/api/post-form1UpdateData/`, {
             _id: edit_id,
             dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
             NameApplicant: NameApplicant,
@@ -154,7 +183,7 @@ http://192.168.225.78:3000/api/post-form1UpdateData/`, {
         try {
             //Save Data by api
             axios.post(`
-http://192.168.225.78:3000/api/post-form1-data`, {
+http://192.168.0.104:3000/api/post-form1-data`, {
                 dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
                 NameApplicant: NameApplicant,
                 CertificateNumber: CertificateNumber
@@ -194,8 +223,8 @@ http://192.168.225.78:3000/api/post-form1-data`, {
                                     : ""
                             }
                         </Text>
-                        <Text style={{ fontWeight: '500', fontSize: 20, marginTop: 5 }}>Applicant's Details</Text>
-                        <Text style={{ fontWeight: '300', margin: 16 }}>a.) Name of the Architect (applicant) to be considered for Award</Text>
+                        <Text style={{ fontWeight: '500', fontSize: 20, marginTop: 5 }}>Education 's Details</Text>
+                        <Text style={{ fontWeight: '300', margin: 16 }}>a.) Name of the education to be considered for app review</Text>
                         <TextInput placeholder='Name of the Architect (applicant) to be considered for Award' style={{ borderRadius: 4, borderWidth: 1, borderColor: 'black', padding: 10 }} value={NameApplicant} onChangeText={setNameApplicant} maxLength={20} />
                         <View>
                             <Text style={{ fontWeight: '300', fontSize: 15, color: "red" }}>
@@ -206,7 +235,7 @@ http://192.168.225.78:3000/api/post-form1-data`, {
                                 }
                             </Text>
                         </View>
-                        <Text style={{ fontWeight: '300', margin: 16 }}>b.) Council of architechture or equivalent body Certificate number </Text>
+                        <Text style={{ fontWeight: '300', margin: 16 }}>b.) Short name of the education</Text>
                         <TextInput placeholder='Council of architechture or equivalent body Certificate number' style={{ borderRadius: 4, borderWidth: 1, borderColor: 'black', padding: 10 }} onChangeText={setCertificateNumber} value={CertificateNumber} maxLength={20} />
                         <Text style={{ fontWeight: '300', fontSize: 15, color: "red" }}>
                             {
@@ -215,9 +244,26 @@ http://192.168.225.78:3000/api/post-form1-data`, {
                                     : ""
                             }
                         </Text>
+                        <Text style={{ fontWeight: '300', margin: 16 }}>c.) Stablish Year</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <TextInput placeholder='DD' style={{ borderRadius: 4, borderWidth: 1, borderColor: 'black', padding: 10, width: 50 }} maxLength={2} keyboardType={'number-pad'} />
+                            <TextInput placeholder='MM' style={{ borderRadius: 4, borderWidth: 1, borderColor: 'black', padding: 10, width: 50, marginHorizontal: 10 }} maxLength={2} keyboardType={'number-pad'} />
+                            <TextInput placeholder='YYYY' style={{ borderRadius: 4, borderWidth: 1, borderColor: 'black', padding: 10, width: 90 }} maxLength={4} keyboardType={'number-pad'} />
+                        </View>
+
+
+
+                        {/* validation date */}
+                        {/* <Text style={{ fontWeight: '300', fontSize: 15, color: "red" }}>
+                            {
+                                IsCertificatenumber == "false"
+                                    ? "Certificate number is Required*"
+                                    : ""
+                            }
+                        </Text> */}
                     </View>
                 </View>
-                <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
+                {/* <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
                     <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
                         <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto", textAlign: 'center' }} onPress={edit_id ? funcUpdateData : funcSubmitData}><Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>{edit_id ? 'Update' : 'Submit'}</Text></Pressable>
                     </View>
@@ -228,6 +274,11 @@ http://192.168.225.78:3000/api/post-form1-data`, {
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
                     <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
                         <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto" }} onPress={() => navigation.navigate('LoginPage')} ><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>login</Text></Pressable>
+                    </View>
+                </View> */}
+                <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
+                    <View style={{ paddingHorizontal: 0, paddingVertical: 5 }}>
+                        <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto" }} onPress={() => navigation.navigate('PersonalInformation')} ><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>Next</Text></Pressable>
                     </View>
                 </View>
 
@@ -248,5 +299,9 @@ const style = StyleSheet.create({
     ViewBok: {
         // flexDirection: 'row',
         width: '100%',
-    }
+    },
+    datePickerStyle: {
+        width: 200,
+        marginTop: 20,
+    },
 });

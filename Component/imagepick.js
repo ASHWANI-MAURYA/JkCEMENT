@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import * as ImagePicker from 'expo-image-picker';
 import { Button, Image, View, Platform, Text,TouchableOpacity } from 'react-native';
 export default function GalleryComponenet() {
@@ -28,10 +29,10 @@ export default function GalleryComponenet() {
 	return (
 		<View >
 			<TouchableOpacity onPress={chooseImg} style={{marginTop:10}}	>
-				<View  style={{borderWidth:1,borderColor:'black',borderStyle:'dashed',width:80, alignItems:"center",padding:2}}>
-				{!image && <><Text>H.N</Text>
-				<Text>+Add logo</Text></>}
-				{image && <Image source={{ uri: image }} style={{ width: 80, height:80, }} />}
+				<View>
+				{!image && <>
+				<Icon name='camera' size={60} color={'#cccccc'} /></>}
+				{image && <Image source={{ uri: image }} style={{ width: 130, height:130, }} />}
 				</View>
 			</TouchableOpacity>
 			

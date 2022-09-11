@@ -2,6 +2,7 @@ import { View, Text, Modal, StyleSheet, Pressable, ScrollView, Alert } from 'rea
 import Table from '../Component/table'
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+// import Date from './Date'
 const AdminPanal = ({ route, navigation }) => {
   // const { UserId } = route.params;
   // const { password } = route.params;
@@ -38,7 +39,7 @@ const AdminPanal = ({ route, navigation }) => {
   function loadPageData() {
     try {
       axios.get(`
-http://192.168.225.78:3000/api/getAll-form1Data`, {
+http://192.168.0.104:3000/api/getAll-form1Data`, {
       })
         .then(res => {
           // debugger;
@@ -96,7 +97,7 @@ http://192.168.225.78:3000/api/getAll-form1Data`, {
         },
         {
           text: "OK", onPress: () => axios.delete(`
-http://192.168.225.78:3000/api/delete-Form1Data/` + val, {
+http://192.168.0.104:3000/api/delete-Form1Data/` + val, {
           })
             .then(res => {
               // debugger;
@@ -177,7 +178,7 @@ http://192.168.225.78:3000/api/delete-Form1Data/` + val, {
           </View>
         </Modal>
       </View>
-
+ {/* <Date /> */}
 
     </ScrollView >
   )

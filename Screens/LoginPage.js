@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, Button,Pressable } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Button,Pressable,ScrollView } from 'react-native'
 import React, { useState } from 'react';
 import axios from "axios";
 const LoginPage = ({ navigation }) => {
@@ -32,7 +32,7 @@ const LoginPage = ({ navigation }) => {
             // debugger;
             //get data by api
             axios.post(`
-http://192.168.225.78:3000/api/get-UserData`, {
+http://192.168.0.104:3000/api/get-UserData`, {
                 Email: Email,
                 Password: Password
             })
@@ -64,12 +64,12 @@ http://192.168.225.78:3000/api/get-UserData`, {
         }
     };
     return (
-        <View>
+        <ScrollView>
             <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 10,padding:10}}>Admin Login</Text>
-            <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 10 }}>
+            <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 0 }}>
                 <View style={style.ViewBok}>
                     <View style={{paddingVertical:10}}>
-                        <Text style={{ fontWeight: '400', fontSize: 20}}>Email</Text>
+                        <Text style={{ fontWeight: '400', fontSize: 20,marginTop:10}}>Email</Text>
                         <TextInput placeholder='Email' keyboardType={'phone-pad'} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4}} value={Email} onChangeText={setEmail} />
                         <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
@@ -90,16 +90,16 @@ http://192.168.225.78:3000/api/get-UserData`, {
                     </View>
                 </View>
             </View>
-            <View style={{ marginHorizontal: 30,justifyContent: 'center', marginTop: 50 }}>
+            <View style={{ marginHorizontal: 30,justifyContent: 'center', marginTop: 0 }}>
                 {/* <View style={{ paddingHorizontal: 10 }}> */}
                 <Pressable style={{backgroundColor: '#351431', padding: 6,marginVertical:5, borderRadius: 4,textAlign: 'center'}}onPress={submit} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Submit</Text></Pressable>
                 {/* </View> */}
                 {/* <View style={{ paddingHorizontal: 10 }}> */}
                 <Pressable style={{backgroundColor: '#351431', padding: 6,marginVertical:5, borderRadius: 4,textAlign: 'center'}} onPress={reset} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Reset</Text></Pressable>
+                <Pressable style={{padding: 6,marginVertical:5, borderRadius: 4,textAlign: 'center'}} onPress={()=>navigation.navigate('EducationRegistration')} ><Text style={{ color: 'blue',textAlign: 'center',fontSize:16 }}>New Registration</Text></Pressable>
                 {/* </View> */}
             </View>
-
-        </View>
+        </ScrollView>
     )
 }
 
