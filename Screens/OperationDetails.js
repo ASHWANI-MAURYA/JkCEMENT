@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet,Pressable } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import CheckBox from '../Component/checkbok'
 
-const OperationDetails = ({navigation}) => {
+const OperationDetails = ({ navigation }) => {
   function boxunchecked() {
     console.log('fdfdfdfdffdfx')
   }
@@ -48,20 +48,20 @@ const OperationDetails = ({navigation}) => {
       <View style={{ backgroundColor: '#351401', marginHorizontal: 10, marginTop: 10, borderRadius: 5 }}>
         <Text style={{ fontWeight: '400', fontSize: 17, marginTop: 0, padding: 10, textAlign: 'center', color: 'white' }}>Operationg Modes</Text>
       </View>
-      <View style={{marginHorizontal: 30, marginVertical: 5 }}>
-          <CheckBox boxunchecked={boxunchecked} title='Online' />
+      <View style={{ marginHorizontal: 30, marginVertical: 5 }}>
+        <CheckBox boxunchecked={boxunchecked} title='Online' />
       </View>
       <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
-                <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
-                    <Pressable onPress={() => navigation.navigate('AddressDetails')} style={{ backgroundColor: '#351431', padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
-                </View>
-                <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
-                    <Pressable onPress={() => navigation.navigate('DocumentsDetails')} style={{ backgroundColor: '#351431', padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
-                </View>
-            </View>
+        <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
+          <Pressable onPress={() => navigation.navigate('AddressDetails')} style={{ backgroundColor: '#351431', padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
+        </View>
+        <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
+          <Pressable onPress={() => navigation.navigate('DocumentsDetails')} style={{ backgroundColor: '#351431', padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
+        </View>
+      </View>
     </View>
-        
-    
+
+
   )
 }
 

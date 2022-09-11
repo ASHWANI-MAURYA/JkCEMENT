@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as ImagePicker from 'expo-image-picker';
-import { Button, Image, View, Platform, Text,TouchableOpacity } from 'react-native';
+import { Button, Image, View, Platform, Text, TouchableOpacity } from 'react-native';
 export default function GalleryComponenet() {
 	const [image, setImage] = useState(null);
 	useEffect(() => {
@@ -27,15 +27,15 @@ export default function GalleryComponenet() {
 		}
 	};
 	return (
-		<View >
-			<TouchableOpacity onPress={chooseImg} style={{marginTop:10}}	>
+		<View>
+			<TouchableOpacity onPress={chooseImg} style={{ marginTop: 10, backgroundColor: 'gray', padding: 5, borderRadius: 10 }}	>
 				<View>
-				{!image && <>
-				<Icon name='camera' size={60} color={'#cccccc'} /></>}
-				{image && <Image source={{ uri: image }} style={{ width: 130, height:130, }} />}
+					{!image && <>
+						<Icon name='camera' size={60} color={'#cccccc'} /></>}
+					{image && <Image source={{ uri: image }} style={{ width:280, height:280, borderRadius: 10 }} />}
 				</View>
 			</TouchableOpacity>
-			
+
 		</View>
 	);
 }
