@@ -24,7 +24,7 @@ const BackendApproval = ({navigation}) => {
                 </View>
                 <View style={{justifyContent: 'center', marginTop: 20,width:'100%' }}>
                     <View style={{ paddingHorizontal: 0, paddingVertical: 5,marginHorizontal: 30, }}>
-                        <Pressable style={{ backgroundColor:colors.colors.headColor,padding: 6, borderRadius: 4, width: "auto" }} onPress={() => navigation.navigate('LoginPage')} ><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>Finsh</Text></Pressable>
+                        <Pressable style={{ backgroundColor:colors.colors.headColor,padding: 6, borderRadius: 4, width: "auto" }} onPress={() => navigation.navigate('Drawer')} ><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>Finsh</Text></Pressable>
                     </View>
                 </View>
             </View>

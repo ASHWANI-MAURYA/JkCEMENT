@@ -5,33 +5,76 @@ import { StyleSheet, TouchableOpacity, View,Text } from 'react-native';
 import { Caption, Drawer, Title, useTheme, } from 'react-native-paper';
 import { colors } from '../Component/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
-// import useAuth from '../auth/useAuth';
-const DrawerContent = (props) => {
+import Icon5 from 'react-native-vector-icons/FontAwesome5';
+import Icon2 from 'react-native-vector-icons/MaterialIcons';
+// import useAuth from '../useAuth';
+const DrawerContent = ({navigation}) => {
   // const { user, logOut } = useAuth.useAuth();
   return (
-    <DrawerContentScrollView {...props} style={{backgroundColor:colors.colors.headColor}}>
+    <DrawerContentScrollView >
       <View style={styles.userInfoSection}>
         <TouchableOpacity
-          // onPress={() => {
-          //   props.navigation.toggleDrawer();
-          // }}
         >
           <MaterialCommunityIcons
             name={"account-circle-outline"}
             size={50}
+            // color='white'
           />
         </TouchableOpacity>
         {/* <Title style={[styles.title]}><Text>Ankush</Text></Title> */}
-        <Caption style={[styles.caption]}><Text>abc@gmail.com</Text></Caption>
+        <Caption style={[styles.caption]}><Text>useremail@gmail.com</Text></Caption>
       </View>
       <Drawer.Section style={styles.drawerSection}>
-       
-        {/* <DrawerItem key="logout"
-          icon={props => <Icon name={'power-off'} size={20} />}
-          label="Logout"
-          onPress={logOut}
-        /> */}
-
+        <DrawerItem key="Dashboard"
+          icon={props => <Icon name={'home'} size={25} />}
+          label="Dashboard"
+          onPress={() => navigation.navigate('screen1')}
+        />
+        <DrawerItem key="Academics"
+          icon={props => <Icon name={'institution'} size={25} />}
+          label="Academics"
+          onPress={() => navigation.navigate('screen2')}
+        />
+        <DrawerItem key="Student"
+          icon={props => <Icon name={'graduation-cap'} size={25} />}
+          label="Student"
+          onPress={() => navigation.navigate('screen1')}
+        />
+        <DrawerItem key="Teacher"
+          icon={props => <Icon name={'user'} size={25} />}
+          label="Teacher "
+          // onPress={logOut}
+        />
+        <DrawerItem key="Parents"
+          icon={props => <Icon name={'users'} size={25} />}
+          label="Parents"
+          // onPress={logOut}
+        />
+        <DrawerItem key="TimeTable"
+          icon={props => <Icon name={'calendar'} size={25} />}
+          label="TimeTable"
+          // onPress={logOut}
+        />
+        <DrawerItem key="holiday"
+          icon={props => <Icon5 name={'calendar'} size={25} />}
+          label="holiday List"
+          // onPress={logOut}
+        />
+        <DrawerItem key="Announcement"
+          icon={props => <Icon2 name={'announcement'} size={25} />}
+          label="Announcement "
+          // onPress={logOut}
+        />
+        <DrawerItem key="Exam"
+          icon={props => <Icon name={'copy'} size={25} />}
+          label="Exam"
+          // onPress={logOut}
+        />
+        <DrawerItem key="ession"
+          icon={props => <Icon name={'calendar-o'} size={25} />}
+          label="ession year"
+          // onPress={logOut}
+        />
       </Drawer.Section>
     </DrawerContentScrollView>
   );
@@ -42,14 +85,17 @@ const styles = StyleSheet.create({
   },
   userInfoSection: {
     paddingLeft: 20,
+    marginTop:20,
+    
   },
   title: {
     marginTop: 20,
     fontWeight: 'bold',
   },
   caption: {
-    fontSize: 14,
-    lineHeight: 14,
+    fontSize: 18,
+    lineHeight: 34,
+    // color:'white',
   },
   row: {
     marginTop: 20,

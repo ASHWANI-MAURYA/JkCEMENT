@@ -10,6 +10,7 @@ import DocumentsDetails from '../Screens/DocumentsDetails';
 import PackageSelection from '../Screens/PackageSelection';
 import BackendApproval from '../Screens/BackendApproval';
 import credential from '../Screens/credential';
+import Drawer from '../Navigation/DrawerNavigatior';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { Title } from 'react-native-paper';
 
@@ -29,6 +30,7 @@ const StackNavigation = () => {
         <Stack.Screen name='PackageSelection' component={PackageSelection} options={{ title: 'Package Selection' }} />
         <Stack.Screen name='credential' component={credential} options={{ title: 'Credential' }} />
         <Stack.Screen name='BackendApproval' component={BackendApproval} options={{ title: 'Backend Approval Status' }} />
+        <Stack.Screen name='Drawer' component={Drawer} options={{headerShown: false}} />
       </Stack.Navigator>
       </>
     // </NavigationContainer>
