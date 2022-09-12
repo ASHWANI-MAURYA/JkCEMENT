@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/Feather';
 import Checkbox from '../Component/whiteCheckbok'
+import { colors } from '../Component/colors'
 import React from 'react'
 
 const cards = () => {
@@ -33,7 +34,7 @@ const cards = () => {
                         <FontAwesome name='check' color={'green'} size={17} style={{ marginTop: 4, marginRight: 5 }} /><Text style={{ fontSize: 17, fontWeight: '400', color: '#000000', marginLeft: 0 }}>Promo Creation</Text>
                     </View>
                 </View>
-                <View style={{ backgroundColor: '#351401', width: 120, borderRadius: 30, position: 'relative', marginTop:-19, flexDirection: 'row',justifyContent:'center',paddingHorizontal:10 }}>
+                <View style={{ backgroundColor:colors.colors.headColor, width: 120, borderRadius: 30, position: 'relative', marginTop:-19, flexDirection: 'row',justifyContent:'center',paddingHorizontal:10 }}>
                     <View style={{flexDirection:'row'}}>
                         <Checkbox/>
                         <Text style={{ color: 'white',marginTop:6,fontSize:15 }}>Select</Text>

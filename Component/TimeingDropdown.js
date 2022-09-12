@@ -16,7 +16,7 @@ const DropdownComponent = (props) => {
       maxHeight={300}
       labelField="label"
       valueField="value"
-      placeholder="Select"
+      placeholder="Select Time"
       value={props.my_value}
       onChange={props.my_onChangeText}
       renderLeftIcon={() => (
@@ -30,7 +30,7 @@ export default DropdownComponent;
 
 const styles = StyleSheet.create({
   dropdown: {
-    margin: 16,
+    marginHorizontal: 14,
     height: 50,
     borderBottomColor: 'gray',
     borderBottomWidth: 0.5,

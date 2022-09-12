@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import { View } from 'react-native-web';
 const MyComponent = ({ title, props }) => {
-    const [checked, setChecked] = React.useState(false);
+    const [checked, setChecked] = React.useState(true);
     // const [value ,setValue]=React.useState('');
     function boxcheck() {
         setChecked(!checked)

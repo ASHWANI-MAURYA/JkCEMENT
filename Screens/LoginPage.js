@@ -1,6 +1,7 @@
 import { View, Text, TextInput, StyleSheet, Button,Pressable,ScrollView } from 'react-native'
 import React, { useState } from 'react';
 import axios from "axios";
+import { colors } from '../Component/colors'
 const LoginPage = ({ navigation }) => {
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
@@ -92,10 +93,10 @@ http://192.168.0.104:3000/api/get-UserData`, {
             </View>
             <View style={{ marginHorizontal: 30,justifyContent: 'center', marginTop: 0 }}>
                 {/* <View style={{ paddingHorizontal: 10 }}> */}
-                <Pressable style={{backgroundColor: '#351431', padding: 6,marginVertical:5, borderRadius: 4,textAlign: 'center'}}onPress={submit} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Submit</Text></Pressable>
+                <Pressable style={{backgroundColor:colors.colors.headColor, padding: 6,marginVertical:5, borderRadius: 4,textAlign: 'center'}}onPress={submit} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Submit</Text></Pressable>
                 {/* </View> */}
                 {/* <View style={{ paddingHorizontal: 10 }}> */}
-                <Pressable style={{backgroundColor: '#351431', padding: 6,marginVertical:5, borderRadius: 4,textAlign: 'center'}} onPress={reset} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Reset</Text></Pressable>
+                <Pressable style={{backgroundColor:colors.colors.headColor, padding: 6,marginVertical:5, borderRadius: 4,textAlign: 'center'}} onPress={reset} ><Text style={{ color: 'white',textAlign: 'center',fontSize:18 }}>Reset</Text></Pressable>
                 <Pressable style={{padding: 6,marginVertical:5, borderRadius: 4,textAlign: 'center'}} onPress={()=>navigation.navigate('EducationRegistration')} ><Text style={{ color: 'blue',textAlign: 'center',fontSize:16 }}>New Registration</Text></Pressable>
                 {/* </View> */}
             </View>

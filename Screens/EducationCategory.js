@@ -3,6 +3,7 @@ import React, { useEffect, useState, useFocusEffect } from 'react'
 import Dropdown from '../Component/dropdown';
 import axios from "axios";
 import Date from '../Component/dateinput';
+import { colors } from '../Component/colors'
 const EducationCategory = ({ route, props, navigation }) => {
     const [NameApplicant, setNameApplicant] = useState("");
     const [CertificateNumber, setCertificateNumber] = useState("");
@@ -278,7 +279,7 @@ http://192.168.0.104:3000/api/post-form1-data`, {
                 </View> */}
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
                     <View style={{ paddingHorizontal: 0, paddingVertical: 5 }}>
-                        <Pressable style={{ backgroundColor: '#351431', padding: 6, borderRadius: 4, width: "auto" }} onPress={() => navigation.navigate('PersonalInformation')} ><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>Next</Text></Pressable>
+                        <Pressable style={{ backgroundColor:colors.colors.headColor,padding: 6, borderRadius: 4, width: "auto" }} onPress={() => navigation.navigate('PersonalInformation')} ><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>Next</Text></Pressable>
                     </View>
                 </View>
 
