@@ -1,14 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { StyleSheet, TouchableOpacity, View,Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { Caption, Drawer, Title, useTheme, } from 'react-native-paper';
 import { colors } from '../Component/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Icon5 from 'react-native-vector-icons/FontAwesome5';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 // import useAuth from '../useAuth';
-const DrawerContent = ({navigation}) => {
+const DrawerContent = ({ navigation }) => {
+  const [focus, setfocus] = useState('1');
+  const [login, setLogin] = useState('');
+  const [NestedDrawerItem, setNestedDrawerItem] = useState(false);
+  const [StudentNestedDrawerItem, setStudentNestedDrawerItem] = useState(false);
+  const [TimeTable, setTimeTable] = useState(false);
+
+  const NestedDrawerItemFUN = () => {
+    if (NestedDrawerItem == true) {
+      setNestedDrawerItem(false);
+
+    } else {
+      setNestedDrawerItem(true);
+    }
+  };
+  const StudentNestedDrawerItemFUN = () => {
+    if (StudentNestedDrawerItem == true) {
+      setStudentNestedDrawerItem(false);
+
+    } else {
+      setStudentNestedDrawerItem(true);
+    }
+  };
+  const TimeTableFUN = () => {
+    if (TimeTable == true) {
+      setTimeTable(false);
+
+    } else {
+      setTimeTable(true);
+    }
+  };
+
+
+
+
   // const { user, logOut } = useAuth.useAuth();
   return (
     <DrawerContentScrollView >
@@ -18,7 +53,7 @@ const DrawerContent = ({navigation}) => {
           <MaterialCommunityIcons
             name={"account-circle-outline"}
             size={50}
-            // color='white'
+          // color='white'
           />
         </TouchableOpacity>
         {/* <Title style={[styles.title]}><Text>Ankush</Text></Title> */}
@@ -26,54 +61,256 @@ const DrawerContent = ({navigation}) => {
       </View>
       <Drawer.Section style={styles.drawerSection}>
         <DrawerItem key="Dashboard"
-          icon={props => <Icon name={'home'} size={25} />}
+          icon={props => <Icon name={'home'} size={18} />}
           label="Dashboard"
-          onPress={() => navigation.navigate('screen1')}
+          onPress={() => navigation.navigate('Dashboard')}
         />
-        <DrawerItem key="Academics"
-          icon={props => <Icon name={'institution'} size={25} />}
-          label="Academics"
-          onPress={() => navigation.navigate('screen2')}
+        <DrawerItem 
+          key="Academics"
+          icon={() => (
+            <Icon name={'institution'} size={17} />
+          )}
+          label={({ focused, colors }) => (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={{ fontSize: 14,color:'#413F42', fontWeight: '500' }}>Academics</Text>
+              {NestedDrawerItem == true &&
+                <AntDesign name={'up'} size={20} />
+              }
+              {NestedDrawerItem == false &&
+                <AntDesign name={'down'} size={20} />
+              }
+            </View>
+          )}
+          onPress={() => {
+            setfocus(1);
+            NestedDrawerItemFUN()
+          }
+            //  navigation.navigate('screen2')
+          }
         />
-        <DrawerItem key="Student"
-          icon={props => <Icon name={'graduation-cap'} size={25} />}
+        {NestedDrawerItem == true &&
+          <DrawerItem key="Medium" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'}/>}
+            label="Medium"
+            onPress={() => {
+              setfocus(1);
+              NestedDrawerItemFUN(),
+              navigation.navigate('Medium')
+            }
+               
+            }
+          />
+        }
+        {NestedDrawerItem == true &&
+          <DrawerItem key="Section" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Section"
+            onPress={() => {
+              setfocus(1);
+              NestedDrawerItemFUN(),
+              navigation.navigate('Section')
+            }
+               
+            }
+            
+          />
+        }
+        {NestedDrawerItem == true &&
+          <DrawerItem key="Subject" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Subject"
+            onPress={() => {
+              setfocus(1);
+              NestedDrawerItemFUN(),
+              navigation.navigate('ManageSubject')
+            }
+               
+            }
+          />
+        }
+        {NestedDrawerItem == true &&
+          <DrawerItem key="Class" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Class"
+            onPress={() => {
+              setfocus(1);
+              NestedDrawerItemFUN(),
+              navigation.navigate('ManageClass')
+            }
+               
+            }
+          />
+        }
+        {NestedDrawerItem == true &&
+          <DrawerItem key="AssignClassSubject" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Assign Class Subject"
+          />
+        }
+        {NestedDrawerItem == true &&
+          <DrawerItem key="AssignClassTeacher" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Assign Class Teacher"
+          />
+        }
+        {NestedDrawerItem == true &&
+          <DrawerItem key="AssignSubjectTeacher" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Assign Subject Teacher"
+          />
+        }
+        {NestedDrawerItem == true &&
+          <DrawerItem key="AssignNewSutdentClass" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Assign New Sutdent Class"
+          />
+        }
+        {NestedDrawerItem == true &&
+          <DrawerItem key="PromoteStudent" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Promote Student"
+          />
+        }
+        <DrawerItem 
+          key="Students"
+          icon={() => (
+            <Icon name={'graduation-cap'} size={14} />
+          )}
+          label={({ focused, colors }) => (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={{ fontSize: 14,color:'#413F42', fontWeight: '500' }}>Students</Text>
+              {StudentNestedDrawerItem == true &&
+                <AntDesign name={'up'} size={20} />
+              }
+              {StudentNestedDrawerItem == false &&
+                <AntDesign name={'down'} size={20} />
+              }
+            </View>
+          )}
+          onPress={() => {
+            setfocus(1);
+            StudentNestedDrawerItemFUN()
+          }
+            //  navigation.navigate('screen2')
+          }
+        />
+        {StudentNestedDrawerItem == true &&
+          <DrawerItem key="StudentsAdmission" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'}/>}
+            label="Students Admission"
+            onPress={() => {
+              setfocus(1);
+              StudentNestedDrawerItemFUN()
+              /navigation.navigate('StudentAdmission')
+            }
+            }
+          />
+        }
+        {StudentNestedDrawerItem == true &&
+          <DrawerItem key="StudentsDetails" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Students Details"
+          />
+        }
+        {StudentNestedDrawerItem == true &&
+          <DrawerItem key="StudentsCategory" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Students Category"
+          />
+        }
+        {StudentNestedDrawerItem == true &&
+          <DrawerItem key="StudentsResetPassword" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Students Reset Password"
+          />
+        }
+        {StudentNestedDrawerItem == true &&
+          <DrawerItem key="AddBulkData" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Add Bulk Data"
+          />
+        }
+        {/* <DrawerItem key="Student"
+          icon={props => <Icon name={'graduation-cap'} size={14} />}
           label="Student"
           onPress={() => navigation.navigate('screen1')}
-        />
+        /> */}
+        
         <DrawerItem key="Teacher"
           icon={props => <Icon name={'user'} size={25} />}
           label="Teacher "
-          // onPress={logOut}
+        // onPress={logOut}
         />
         <DrawerItem key="Parents"
-          icon={props => <Icon name={'users'} size={25} />}
+          icon={props => <Icon name={'users'} size={17} />}
           label="Parents"
-          // onPress={logOut}
+        // onPress={logOut}
         />
-        <DrawerItem key="TimeTable"
-          icon={props => <Icon name={'calendar'} size={25} />}
+        {/* <DrawerItem key="TimeTable"
+          icon={props => <Icon name={'calendar'} size={20} />}
           label="TimeTable"
-          // onPress={logOut}
+        // onPress={logOut}
+        /> */}
+        <DrawerItem 
+          key="TimeTable"
+          icon={() => (
+            <Icon name={'institution'} size={17} />
+          )}
+          label={({ focused, colors }) => (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={{ fontSize: 14,color:'#413F42', fontWeight: '500' }}>TimeTable</Text>
+              {TimeTable == true &&
+                <AntDesign name={'up'} size={20} />
+              }
+              {TimeTable == false &&
+                <AntDesign name={'down'} size={20} />
+              }
+            </View>
+          )}
+          onPress={() => {
+            setfocus(1);
+            TimeTableFUN()
+          }
+            //  navigation.navigate('screen2')
+          }
         />
-        <DrawerItem key="holiday"
-          icon={props => <Icon5 name={'calendar'} size={25} />}
-          label="holiday List"
-          // onPress={logOut}
+        {TimeTable == true &&
+          <DrawerItem key="CreateTimeTable" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'}/>}
+            label="Create TimeTable"
+          />
+        }
+        {TimeTable == true &&
+          <DrawerItem key="ClassTimeTable" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Class TimeTable"
+          />
+        }
+        {TimeTable == true &&
+          <DrawerItem key="TeachersTimeTable" style={{ marginLeft: '10%' }}
+            // icon={props => <Icon name={'institution'} />}
+            label="Teachers TimeTable"
+          />
+        }
+        <DrawerItem key="Holiday"
+          icon={props => <Icon5 name={'calendar'} size={21} />}
+          label="Holiday List"
+        // onPress={logOut}
         />
         <DrawerItem key="Announcement"
-          icon={props => <Icon2 name={'announcement'} size={25} />}
+          icon={props => <Icon2 name={'announcement'} size={19} />}
           label="Announcement "
-          // onPress={logOut}
+        // onPress={logOut}
         />
         <DrawerItem key="Exam"
-          icon={props => <Icon name={'copy'} size={25} />}
+          icon={props => <Icon name={'copy'} size={17} />}
           label="Exam"
-          // onPress={logOut}
+        // onPress={logOut}
         />
-        <DrawerItem key="ession"
-          icon={props => <Icon name={'calendar-o'} size={25} />}
-          label="ession year"
-          // onPress={logOut}
+        <DrawerItem key="Session"
+          icon={props => <Icon name={'calendar-o'} size={19} />}
+          label="Session year"
+        // onPress={logOut}
         />
       </Drawer.Section>
     </DrawerContentScrollView>
@@ -85,8 +322,8 @@ const styles = StyleSheet.create({
   },
   userInfoSection: {
     paddingLeft: 20,
-    marginTop:20,
-    
+    marginTop: 20,
+
   },
   title: {
     marginTop: 20,

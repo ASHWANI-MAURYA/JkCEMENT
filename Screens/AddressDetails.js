@@ -9,15 +9,15 @@ const PersonalInformation = ({navigation}) => {
                 <View style={style.ViewBok}>
                     <View style={{ paddingVertical: 10 }}>
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>City</Text>
-                        <TextInput secureTextEntry={true} keyboardType={'default'} placeholder='City' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                        <TextInput  keyboardType={'default'} placeholder='City' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>State</Text>
-                        <TextInput secureTextEntry={true} keyboardType={'default'} placeholder='State' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                        <TextInput  keyboardType={'default'} placeholder='State' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Address</Text>
-                        <TextInput secureTextEntry={true} keyboardType={'default'} placeholder='Address' multiline={true} numberOfLines={4}  style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4,textAlignVertical: 'top' }} />
+                        <TextInput  keyboardType={'default'} placeholder='Address' multiline={true} numberOfLines={4}  style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4,textAlignVertical: 'top' }} />
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Landmark</Text>
-                        <TextInput secureTextEntry={true} keyboardType={'default'} placeholder='Landmark' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                        <TextInput  keyboardType={'default'} placeholder='Landmark' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Postal Code</Text>
-                        <TextInput secureTextEntry={true} keyboardType={'phone-pad'} maxLength={6} placeholder='Postal Code' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                        <TextInput  keyboardType={'phone-pad'} maxLength={6} placeholder='Postal Code' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
                     </View>
                 </View>
             </View>

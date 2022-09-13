@@ -1,19 +1,25 @@
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import screen1 from '../Screens/Screen1.js';
-import screen2 from '../Screens/Screen2.js';
-import screen3 from '../Screens/screen3.js';
+import Dashboard from '../Screens/Dashboard.js';
+import Medium from '../Screens/Medium.js';
+import Section from '../Screens/Section';
+import ManageSubject from '../Screens/ManageSubject';
+import StudentAdmission from '../Screens/StudentAdmission';
+import ManageClass from '../Screens/ManageClass';
 import DrawerContent from './DrawerContent';
 import { colors } from '../Component/colors.js';
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigatior = ({navigation}) =>{
+const DrawerNavigatior = () =>{
   return (
     <>
       <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}screenOptions={{ headerStyle: { backgroundColor:colors.colors.headColor }, headerTintColor: 'white', }}>
-        <Drawer.Screen name="screen1" component={screen1}/>
-        <Drawer.Screen name="screen2" component={screen2} />
-        <Drawer.Screen name="screen3" component={screen3} />
+        <Drawer.Screen name="Dashboard" component={Dashboard}/>
+        <Drawer.Screen name="Medium" component={Medium} options={{ title: 'Manage Medium' }}/>
+        <Drawer.Screen name="Section" component={Section} options={{ title: 'Manage Section' }}/>
+        <Drawer.Screen name="ManageSubject" component={ManageSubject} options={{ title: 'Manage Subject' }}/>
+        <Drawer.Screen name="ManageClass" component={ManageClass} options={{ title: 'Manage Class' }}/>
+        <Drawer.Screen name="StudentAdmission" component={StudentAdmission} options={{ title: 'Student Admission' }}/>
       </Drawer.Navigator>
     </>
   );

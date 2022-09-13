@@ -1,7 +1,7 @@
 export const colors={
     colors:{
 headColor:'#351401',
-buttonColor:'##351401',
+buttonColor:'#351401',
 primary200:'#198754',
 primary400:'#3D8361',
 primary500:'#3e04c3',

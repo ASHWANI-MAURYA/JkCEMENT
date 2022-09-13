@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "https://png.pngtree.com/background/20210709/original/pngtree-college-entrance-examination-graduation-season-travel-simple-picture-image_943361.jpg",
+      "image": "./assets/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
@@ -24,7 +24,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.ashwani1maurya.JkCEMENT"
     },
     "web": {
       "favicon": "./assets/favicon.png"
