@@ -10,10 +10,11 @@ import DrawerContent from './DrawerContent';
 import { colors } from '../Component/colors.js';
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigatior = () =>{
+const DrawerNavigatior = ({navigation}) =>{
   return (
     <>
       <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}screenOptions={{ headerStyle: { backgroundColor:colors.colors.headColor }, headerTintColor: 'white', }}>
+
         <Drawer.Screen name="Dashboard" component={Dashboard}/>
         <Drawer.Screen name="Medium" component={Medium} options={{ title: 'Manage Medium' }}/>
         <Drawer.Screen name="Section" component={Section} options={{ title: 'Manage Section' }}/>
