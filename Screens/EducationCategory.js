@@ -53,7 +53,7 @@ const EducationCategory = ({ route, props, navigation }) => {
             try {
                 //get  Data by api
                 axios.get(`
-http://192.168.0.104:3000/api/getById-form1Data/` + edit_id, {
+http://192.168.126.78:3000/api/getById-form1Data/` + edit_id, {
                 })
                     .then(res => {
                         // debugger;
@@ -76,7 +76,7 @@ http://192.168.0.104:3000/api/getById-form1Data/` + edit_id, {
         try {
             //get  Data by api
             axios.get(`
-http://192.168.0.104:3000/api/getAll-AwardCategory`, {
+http://192.168.126.78:3000/api/getAll-AwardCategory`, {
             })
                 .then(res => {
                     debugger;
@@ -134,7 +134,7 @@ http://192.168.0.104:3000/api/getAll-AwardCategory`, {
         //Save Data by api
         // debugger;
         axios.patch(`
-http://192.168.0.104:3000/api/post-form1UpdateData/`, {
+http://192.168.126.78:3000/api/post-form1UpdateData/`, {
             _id: edit_id,
             dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
             NameApplicant: NameApplicant,
@@ -184,7 +184,7 @@ http://192.168.0.104:3000/api/post-form1UpdateData/`, {
         try {
             //Save Data by api
             axios.post(`
-http://192.168.0.104:3000/api/post-form1-data`, {
+            http://192.168.221.78:3000/api/post-form1-data`, {
                 dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
                 NameApplicant: NameApplicant,
                 CertificateNumber: CertificateNumber
@@ -200,6 +200,8 @@ http://192.168.0.104:3000/api/post-form1-data`, {
                             { text: "OK", onPress: () => funcClearData() }
                         ]
                     );
+                    navigation.navigate('PersonalInformation')
+
                 })
                 .catch(e => {
                     console.log(`post error ${e}`);
@@ -212,7 +214,6 @@ http://192.168.0.104:3000/api/post-form1-data`, {
     return (
         <View style={{ flex: 1 }}>
             <ScrollView style={{ marginBottom: 10 }}>
-                <Text style={{ textAlign: 'center', marginTop: 10, marginHorizontal: 10, fontSize: 16 }}>Form(1) "Indian Architecture Award & Indian State Architecture Awards"</Text>
                 <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 5 }}>
                     <View style={style.ViewBok}>
                         <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 10 }}>Education Category</Text>
@@ -279,7 +280,7 @@ http://192.168.0.104:3000/api/post-form1-data`, {
                 </View> */}
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 20 }}>
                     <View style={{ paddingHorizontal: 0, paddingVertical: 5 }}>
-                        <Pressable style={{ backgroundColor:colors.colors.headColor,padding: 6, borderRadius: 4, width: "auto" }} onPress={() => navigation.navigate('PersonalInformation')} ><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>Next</Text></Pressable>
+                        <Pressable style={{ backgroundColor:colors.colors.headColor,padding: 6, borderRadius: 4, width: "auto" }} onPress={funcSubmitData} ><Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>Next</Text></Pressable>
                     </View>
                 </View>
 

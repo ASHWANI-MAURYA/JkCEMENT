@@ -7,6 +7,7 @@ import ManageSubject from '../Screens/ManageSubject';
 import StudentAdmission from '../Screens/StudentAdmission';
 import ManageClass from '../Screens/ManageClass';
 import DrawerContent from './DrawerContent';
+import Teacher from '../Screens/Teacher'
 import { colors } from '../Component/colors.js';
 const Drawer = createDrawerNavigator();
 
@@ -21,6 +22,7 @@ const DrawerNavigatior = ({navigation}) =>{
         <Drawer.Screen name="ManageSubject" component={ManageSubject} options={{ title: 'Manage Subject' }}/>
         <Drawer.Screen name="ManageClass" component={ManageClass} options={{ title: 'Manage Class' }}/>
         <Drawer.Screen name="StudentAdmission" component={StudentAdmission} options={{ title: 'Student Admission' }}/>
+        <Drawer.Screen name="Teacher" component={Teacher} options={{ title: 'Teachers' }}/>
       </Drawer.Navigator>
     </>
   );

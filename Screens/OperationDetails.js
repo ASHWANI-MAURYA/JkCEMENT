@@ -4,11 +4,11 @@ import CheckBox from '../Component/checkbok';
 import { colors } from '../Component/colors';
 import TimeingDropdown from '../Component/TimeingDropdown';
 const OperationDetails = ({ navigation }) => {
-  function boxunchecked() {
-    console.log('fdfdfdfdffdfx')
+  function Sunday() {
+    console.log('sunday checked')
   }
-  function boxchecked() {
-    console.log('check done')
+  function boxunchecked() {
+    console.log('check days')
   }
   const OpenTime =
     [
@@ -65,12 +65,12 @@ const OperationDetails = ({ navigation }) => {
         <Text style={{ fontWeight: '400', fontSize: 17, marginTop: 0, padding: 10, textAlign: 'center', color: 'white' }}>Timeing</Text>
       </View>
       <View style={{ flexDirection: 'row' }}>
-        <View style={{width:'50%'}}>
-          <Text style={{textAlign:'center',marginTop:20,fontWeight:'600',fontSize:19}} >Open</Text>
+        <View style={{ width: '50%' }}>
+          <Text style={{ textAlign: 'center', marginTop: 20, fontWeight: '600', fontSize: 19 }} >Open</Text>
           <TimeingDropdown bindDataAwardCategory={OpenTime} my_onChangeText={setopening} my_value={opening} />
         </View>
-        <View style={{width:'50%'}}>
-          <Text style={{textAlign:'center',marginTop:20,fontWeight:'600',fontSize:19}} >Close</Text>
+        <View style={{ width: '50%' }}>
+          <Text style={{ textAlign: 'center', marginTop: 20, fontWeight: '600', fontSize: 19 }} >Close</Text>
           <TimeingDropdown bindDataAwardCategory={CloseTime} my_onChangeText={setclosing} my_value={closing} />
         </View>
       </View>
@@ -104,7 +104,7 @@ const OperationDetails = ({ navigation }) => {
           <CheckBox boxunchecked={boxunchecked} title='Thursday' />
           <CheckBox boxunchecked={boxunchecked} title='Friday' />
           <CheckBox boxunchecked={boxunchecked} title='Saturday' />
-          <CheckBox boxunchecked={boxunchecked} title='Sunday' />
+          <CheckBox boxunchecked={Sunday} title='Sunday' />
         </View>
       </View>
       <View style={{ backgroundColor: '#351401', marginHorizontal: 10, marginTop: 10, borderRadius: 5 }}>
@@ -118,7 +118,9 @@ const OperationDetails = ({ navigation }) => {
           <Pressable onPress={() => navigation.navigate('AddressDetails')} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
         </View>
         <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
-          <Pressable onPress={() => navigation.navigate('DocumentsDetails')} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
+          <Pressable onPress={
+            () => navigation.navigate('DocumentsDetails')
+            } style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
         </View>
       </View>
     </View>

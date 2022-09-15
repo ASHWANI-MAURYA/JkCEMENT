@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-const MyComponent = ({ title, props }) => {
+const MyComponent = ({ title, props,}) => {
    const [checked, setChecked] = React.useState(false);
    // const [value ,setValue]=React.useState('');
-   function boxcheck() {
+   function boxcheck({}) {
       setChecked(!checked)
      let data =(checked?false:true);
-       console.log(data)
+    
+    
        
    }
+   // value
    return (
       <SafeAreaView style={styles.container}>
          <Checkbox

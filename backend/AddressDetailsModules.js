@@ -1,30 +1,26 @@
 const mongoose = require('mongoose');
 
-const Form1DataSchema = new mongoose.Schema({
-    dataAwardCategorySelectionId: {
+const AddressDetailsSchema = new mongoose.Schema({
+    City: {
         required: false,
         type: String
     },
-    NameApplicant: {
+    State: {
         required: false,
         type: String
     },
-    CertificateNumber: {
+    Address: {
         required: false,
         type: String
     },
-    Email: {
+    Landmark: {
         required: false,
         type: String
     },
-    AltEmail: {
-        required: false,
-        type: String
-    },
-    Mobile: {
+    Code: {
         required: false,
         type: String
     },
 })
 
-module.exports = mongoose.model('Form1Data', Form1DataSchema)
+module.exports = mongoose.model('AddressDetails', AddressDetailsSchema)

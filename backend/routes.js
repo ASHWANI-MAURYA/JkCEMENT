@@ -1,5 +1,6 @@
 const express = require('express');
 const Form1Model = require('./Form1Model');
+const  AddressDetailsModules= require('./AddressDetailsModules');
 const AwardCategoryModel = require('./AwardCategoryModel');
 const LoginModel = require('./LoginModel');
 const e = require('express');
@@ -16,7 +17,10 @@ router.post('/post-form1-data', async (req, res) => {
         const Form1Data_obj = new Form1Model({
             dataAwardCategorySelectionId: req.body.dataAwardCategorySelectionId,
             NameApplicant: req.body.NameApplicant,
-            CertificateNumber: req.body.CertificateNumber
+            CertificateNumber: req.body.CertificateNumber,
+            Email: req.body.Email,
+            AltEmail: req.body.AltEmail,
+            Mobile: req.body.Mobile,
         });
         const dataToSave = await Form1Data_obj.save();
         res.status(200).json({ Message: "Data Saved Sucessfully!" });
@@ -38,6 +42,9 @@ router.get('/getAll-form1Data', async (req, res) => {
             filterTempData.push(allData[i].dataAwardCategorySelectionId ? allData[i].dataAwardCategorySelectionId : "");
             filterTempData.push(allData[i].NameApplicant ? allData[i].NameApplicant : "");
             filterTempData.push(allData[i].CertificateNumber ? allData[i].CertificateNumber : "");
+            filterTempData.push(allData[i].Email ? allData[i].Email : "");
+            filterTempData.push(allData[i].AltEmail ? allData[i].AltEmail : "");
+            filterTempData.push(allData[i].Mobile ? allData[i].Mobile : "");
             filterTempData.push(allData[i]._id ? allData[i]._id : "");
             filterData.push(filterTempData);
         }
@@ -160,6 +167,50 @@ router.patch('/post-form1UpdateData', async (req, res) => {
         // res.status(200).json(`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`);
 
 
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+router.post('/post-AddressDetails-data', async (req, res) => {
+
+    try {
+
+        const AddressDetailsModules_obj = new AddressDetailsModules({
+            City: req.body.City,
+            State: req.body.State,
+            Address: req.body.Address,
+            Landmark: req.body.Landmark,
+            Code: req.body.Code,
+        });
+        const dataToSave = await AddressDetailsModules_obj.save();
+        res.status(200).json({ Message: "Data Saved Sucessfully!" });
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+router.get('/getAll-AddressDetails-data', async (req, res) => {
+
+    try {
+        const allData = await AddressDetailsModules.find();
+        var filterData = [];
+        for (var i = 0; i < allData.length; i++) {
+            var filterTempData = [];
+            // filterTempData.push(allData[i]._id);
+            filterTempData.push(allData[i].City ? allData[i].City : "");
+            filterTempData.push(allData[i].State ? allData[i].State : "");
+            filterTempData.push(allData[i].Address ? allData[i].Address : "");
+            filterTempData.push(allData[i].Landmark ? allData[i].Landmark : "");
+            filterTempData.push(allData[i].Code ? allData[i].Code : "");
+            filterData.push(filterTempData);
+        }
+        res.status(200).json(
+            {
+                tableData: filterData
+            });
     }
     catch (error) {
         res.status(400).json({ message: error.message });

@@ -1,39 +1,78 @@
-import { View, Text, StyleSheet, TextInput, Pressable,ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView,Alert} from 'react-native'
+import React, { useState } from 'react'
 import { colors } from '../Component/colors'
+import axios from "axios";
+const AddressDetails = ({ navigation }) => {
+    const [City, setCity] = useState();
+    const [State, setState] = useState();
+    const [Address, setAddress] = useState();
+    const [Landmark, setLandmark] = useState();
+    const [Code, setCode] = useState();
+    function submitform() {
+        try {
+            //Save Data by api
+            axios.post(`
+            http://192.168.221.78:3000/api/post-AddressDetails-data`, {
+                City: City,
+                State: State,
+                Address: Address,
+                Landmark:Landmark,
+                Code:Code,
+            })
+                .then(res => {
+                    debugger;
+                    let userInfo = res.data;
+                    Alert.alert(
+                        "Personal Information",
+                        userInfo.Message,
+                        [
 
-const PersonalInformation = ({navigation}) => {
-    return (
-        <ScrollView>
-            <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 10 }}>
-                <View style={style.ViewBok}>
-                    <View style={{ paddingVertical: 10 }}>
-                        <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>City</Text>
-                        <TextInput  keyboardType={'default'} placeholder='City' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
-                        <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>State</Text>
-                        <TextInput  keyboardType={'default'} placeholder='State' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
-                        <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Address</Text>
-                        <TextInput  keyboardType={'default'} placeholder='Address' multiline={true} numberOfLines={4}  style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4,textAlignVertical: 'top' }} />
-                        <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Landmark</Text>
-                        <TextInput  keyboardType={'default'} placeholder='Landmark' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
-                        <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Postal Code</Text>
-                        <TextInput  keyboardType={'phone-pad'} maxLength={6} placeholder='Postal Code' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
-                    </View>
+                            { text: "OK", }
+                        ]
+                    );
+                    navigation.navigate('OperationDetails')
+
+                })
+                .catch(e => {
+                    console.log(`post error ${e}`);
+                });
+        }
+        catch (error) {
+            console.log(error.message);
+        }
+    };
+
+return (
+    <ScrollView>
+        <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 10 }}>
+            <View style={style.ViewBok}>
+                <View style={{ paddingVertical: 10 }}>
+                    <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>City</Text>
+                    <TextInput keyboardType={'default'} placeholder='City' value={City} onChangeText={setCity} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                    <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>State</Text>
+                    <TextInput keyboardType={'default'} placeholder='State' value={State} onChangeText={setState} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                    <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Address</Text>
+                    <TextInput keyboardType={'default'} placeholder='Address' value={Address} onChangeText={setAddress} multiline={true} numberOfLines={4} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4, textAlignVertical: 'top' }} />
+                    <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Landmark</Text>
+                    <TextInput keyboardType={'default'} placeholder='Landmark' value={Landmark} onChangeText={setLandmark} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                    <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Postal Code</Text>
+                    <TextInput keyboardType={'phone-pad'} maxLength={6} placeholder='Postal Code' value={Code} onChangeText={setCode} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
                 </View>
             </View>
-            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
-                <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 10, width: '30%' }}>
-                    <Pressable onPress={() => navigation.navigate('PersonalInformation')} style={{ backgroundColor:colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center'  }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
-                </View>
-                <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 10, width: '30%' }}>
-                    <Pressable onPress={() => navigation.navigate('OperationDetails')} style={{ backgroundColor:colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
-                </View>
+        </View>
+        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+            <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 10, width: '30%' }}>
+                <Pressable onPress={() => navigation.navigate('PersonalInformation')} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
             </View>
-        </ScrollView>
-    )
+            <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 10, width: '30%' }}>
+                <Pressable onPress={submitform} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
+            </View>
+        </View>
+    </ScrollView>
+)
 }
 
-export default PersonalInformation
+export default AddressDetails;
 const style = StyleSheet.create({
     inputBok: {
         borderWidth: 1,

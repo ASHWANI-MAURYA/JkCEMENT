@@ -28,10 +28,10 @@ export default function GalleryComponenet() {
 	};
 	return (
 		<View>
-			<TouchableOpacity onPress={chooseImg} style={{ marginTop: 10, backgroundColor: 'gray', padding: 5, borderRadius: 10 }}	>
+			<TouchableOpacity onPress={chooseImg} style={{ marginTop: 10, padding: 5, borderRadius: 10 }}	>
 				<View style={{justifyContent:'center',alignSelf:'center'}}>
-                    <Text style={{textAlign:'center'}}>Choose Image</Text>
-					 <Image source={{ uri: image }} style={{ width:100, height:100, borderRadius: 10 }} />
+                    <Text style={{textAlign:'center',backgroundColor:'gray',padding:10,borderRadius:6}}>Choose Image</Text>
+					  <Image source={{ uri: image }} style={{ width:100, height:100, borderRadius: 10,marginTop:10 }} />
 				</View>
 			</TouchableOpacity>
 

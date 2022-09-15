@@ -33,7 +33,7 @@ const LoginPage = ({ navigation }) => {
             // debugger;
             //get data by api
             axios.post(`
-http://192.168.0.104:3000/api/get-UserData`, {
+http://192.168.221.78:3000/api/get-UserData`, {
                 Email: Email,
                 Password: Password
             })
@@ -44,12 +44,13 @@ http://192.168.0.104:3000/api/get-UserData`, {
                     if(userInfo.getUserData.length)
                     {
                         // console.log(userInfo.getUserData[0].Password);
-                        navigation.navigate('AdminPanal',
-                        {
-                            UserId:userInfo.getUserData[0].Email,
-                            UserId:userInfo.getUserData[0].Password
-                        }
-                        );   
+                        navigation.navigate('Drawer', { screen: 'Dashboard' });
+                        // navigation.navigate('Dashboard',
+                        // {
+                        //     UserId:userInfo.getUserData[0].Email,
+                        //     UserId:userInfo.getUserData[0].Password
+                        // }
+                        // );   
                     }
                     else{
                         window.alert('Invalid Credentials!');
@@ -71,7 +72,7 @@ http://192.168.0.104:3000/api/get-UserData`, {
                 <View style={style.ViewBok}>
                     <View style={{paddingVertical:10}}>
                         <Text style={{ fontWeight: '400', fontSize: 20,marginTop:10}}>Email</Text>
-                        <TextInput placeholder='Email' keyboardType={'phone-pad'} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4}} value={Email} onChangeText={setEmail} />
+                        <TextInput placeholder='Email' keyboardType={'default'} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4}} value={Email} onChangeText={setEmail} />
                         <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
                                 isEmail == "false"
@@ -80,7 +81,7 @@ http://192.168.0.104:3000/api/get-UserData`, {
                             }
                         </Text>
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop:5 }}>Password</Text>
-                        <TextInput secureTextEntry={true} keyboardType={'phone-pad'} placeholder='Password' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4 }} value={Password} onChangeText={setPassword} />
+                        <TextInput  keyboardType={'phone-pad'} placeholder='Password' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10,borderRadius:4 }} value={Password} onChangeText={setPassword} />
                         <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
                                 isPassword == "false"

@@ -227,7 +227,7 @@ const DrawerContent = ({ navigation }) => {
           <DrawerItem key="Teacher"
             icon={props => <Icon name={'user'} size={25} />}
             label="Teacher "
-          // onPress={logOut}
+           onPress={() => navigation.navigate('Teacher')}
           />
           <DrawerItem key="Parents"
             icon={props => <Icon name={'users'} size={17} />}
@@ -261,6 +261,9 @@ const DrawerContent = ({ navigation }) => {
             <DrawerItem key="CreateTimeTable" style={{ marginLeft: '10%' }}
               // icon={props => <Icon name={'institution'}/>}
               label="Create TimeTable"
+              onPress={()=>navigation.navigate('AdminPanal')}
+              
+              
             />
           }
           {TimeTable == true &&

@@ -1,15 +1,54 @@
-import { View, Text, StyleSheet, TextInput, Pressable,ScrollView } from 'react-native'
-import React from 'react'
-import { colors } from '../Component/colors'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert } from 'react-native'
+import { colors } from '../Component/colors';
+import axios from "axios";
 
-const PersonalInformation = ({navigation}) => {
+const PersonalInformation = ({ navigation }) => {
+    const [Email, setEmail] = useState();
+    const [AltEmail, SetAltEmail] = useState();
+    const [Mobile, setMobile] = useState();
+    const [] = useState();
+    function funcSubmitData() {
+        //Validation.....
+        //#region This Code is used for validation perpose only
+
+        try {
+            //Save Data by api
+            axios.post(`
+            http://192.168.221.78:3000/api/post-form1-data`, {
+                Email: Email,
+                AltEmail: AltEmail,
+                Mobile: Mobile
+            })
+                .then(res => {
+                    debugger;
+                    let userInfo = res.data;
+                    Alert.alert(
+                        "Form (1)",
+                        userInfo.Message,
+                        [
+
+                            { text: "OK", }
+                        ]
+                    );
+                    navigation.navigate('AddressDetails')
+
+                })
+                .catch(e => {
+                    console.log(`post error ${e}`);
+                });
+        }
+        catch (error) {
+            console.log(error.message);
+        }
+    };
     return (
         <ScrollView>
             <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 20 }}>
                 <View style={style.ViewBok}>
                     <View style={{ paddingVertical: 10 }}>
                         <Text style={{ fontWeight: '400', fontSize: 20 }}>Email</Text>
-                        <TextInput placeholder='Email' keyboardType={'email-address'} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                        <TextInput placeholder='Email' keyboardType={'email-address'} value={Email} onChangeText={setEmail} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
                         {/* <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
                                 isEmail == "false"
@@ -17,19 +56,23 @@ const PersonalInformation = ({navigation}) => {
                                     : ''
                             }
                         </Text> */}
+                        <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Alter Email No</Text>
+                        <TextInput placeholder='Alter Email No' value={AltEmail} onChangeText={SetAltEmail} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Mobile No</Text>
-                        <TextInput secureTextEntry={true} keyboardType={'phone-pad'} placeholder='Mobile No' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
-                        <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Alter Mobile No</Text>
-                        <TextInput secureTextEntry={true} keyboardType={'phone-pad'} placeholder='Alter Mobile No' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                        <TextInput placeholder='Mobile No' value={Mobile} onChangeText={setMobile} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
                     </View>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
-                    <Pressable onPress={() => navigation.navigate('EducationRegistration')} style={{ backgroundColor:colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
+                    <Pressable onPress={() => navigation.navigate('EducationRegistration',
+                        {
+                            edit_id: val
+                        }
+                    )} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
                 </View>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
-                    <Pressable onPress={() => navigation.navigate('AddressDetails')} style={{ backgroundColor:colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
+                    <Pressable onPress={funcSubmitData} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
                 </View>
             </View>
         </ScrollView>
