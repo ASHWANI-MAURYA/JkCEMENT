@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-const MyComponent = ({ title, props,}) => {
+const MyComponent = ({ title}) => {
    const [checked, setChecked] = React.useState(false);
-   // const [value ,setValue]=React.useState('');
    function boxcheck({}) {
       setChecked(!checked)
      let data =(checked?false:true);
-    
-    
-       
+     console.log(data)
+     event => handleClick(100)
+     
    }
+
    // value
    return (
       <SafeAreaView style={styles.container}>
@@ -18,7 +18,6 @@ const MyComponent = ({ title, props,}) => {
             status={checked ? 'checked' : 'unchecked'}
             onPress={boxcheck}
             color={'green'}
-            uncheckColor={'red'}
          />
 
          <Text style={{marginTop:8}}>{title}</Text>

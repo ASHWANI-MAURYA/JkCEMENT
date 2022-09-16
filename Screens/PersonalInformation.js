@@ -15,7 +15,7 @@ const PersonalInformation = ({ navigation }) => {
         try {
             //Save Data by api
             axios.post(`
-            http://192.168.221.78:3000/api/post-form1-data`, {
+            http://192.168.0.100:3000/api/post-form1-data`, {
                 Email: Email,
                 AltEmail: AltEmail,
                 Mobile: Mobile

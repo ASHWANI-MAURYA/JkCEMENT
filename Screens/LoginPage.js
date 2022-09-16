@@ -33,7 +33,7 @@ const LoginPage = ({ navigation }) => {
             // debugger;
             //get data by api
             axios.post(`
-http://192.168.221.78:3000/api/get-UserData`, {
+http://192.168.0.100:3000/api/get-UserData`, {
                 Email: Email,
                 Password: Password
             })

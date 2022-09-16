@@ -12,7 +12,7 @@ const AddressDetails = ({ navigation }) => {
         try {
             //Save Data by api
             axios.post(`
-            http://192.168.221.78:3000/api/post-AddressDetails-data`, {
+            http://192.168.0.100:3000/api/post-AddressDetails-data`, {
                 City: City,
                 State: State,
                 Address: Address,

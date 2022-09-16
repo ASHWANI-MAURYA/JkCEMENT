@@ -4,7 +4,7 @@ import Dropdown from '../Component/dropdown';
 import Imagepick from '../Component/imagepick';
 import { colors } from '../Component/colors'
 // import { RNCamera } from 'react-native-camera'
-const DocumentsDetails = ({navigation}) => {
+const DocumentsDetails = ({ navigation }) => {
     const idProof =
         [
             { label: 'Adhar Card', value: 'Adhar Card' },
@@ -12,12 +12,9 @@ const DocumentsDetails = ({navigation}) => {
             { label: 'Driving Licence', value: 'Driving Licence' },
         ];
     const [dataAwardCategorySelectionId, setdataAwardCategorySelectionId] = useState("")
-    // const dataAwardCategory =
-    //     [
-    //         { label: 'Istitute', value: 'Istitute' },
-    //         { label: 'School', value: 'School' },
-    //     ];
-
+    function submitform() {
+        console.log(dataAwardCategorySelectionId.value);
+    }
     return (
         <ScrollView>
 
@@ -29,18 +26,21 @@ const DocumentsDetails = ({navigation}) => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <Imagepick />
             </View>
-            <Text style={{ textAlign: 'center', marginVertical: 10, fontWeight: '600', fontSize: 20 }}>{dataAwardCategorySelectionId.value}</Text>
+            <Text style={{ textAlign: 'center', marginVertical: 10, fontWeight: '400', fontSize: 18 }}>{dataAwardCategorySelectionId.value}</Text>
             {/* <Dropdown bindDataAwardCategory={dataAwardCategory} /> */}
             <Text style={{ marginHorizontal: 20, marginTop: 15, borderRadius: 5, fontSize: 18 }}>Select Profile</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginVertical: 20 }}>
                 <Imagepick />
             </View>
-            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between',marginBottom:20,marginVertical:20 }}>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginBottom: 20, marginVertical: 20 }}>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
-                    <Pressable onPress={() => navigation.navigate('OperationDetails')} style={{ backgroundColor:colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
+                    <Pressable onPress={() => navigation.navigate('OperationDetails')} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
                 </View>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
-                    <Pressable onPress={() => navigation.navigate('PackageSelection')} style={{ backgroundColor:colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
+                    <Pressable onPress={
+                        // () => navigation.navigate('PackageSelection')
+                        submitform
+                    } style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
                 </View>
             </View>
         </ScrollView>

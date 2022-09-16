@@ -3,6 +3,7 @@ const Form1Model = require('./Form1Model');
 const  AddressDetailsModules= require('./AddressDetailsModules');
 const AwardCategoryModel = require('./AwardCategoryModel');
 const LoginModel = require('./LoginModel');
+const operationModel =require('./operationModel')
 const e = require('express');
 
 const router = express.Router()
@@ -205,6 +206,73 @@ router.get('/getAll-AddressDetails-data', async (req, res) => {
             filterTempData.push(allData[i].Address ? allData[i].Address : "");
             filterTempData.push(allData[i].Landmark ? allData[i].Landmark : "");
             filterTempData.push(allData[i].Code ? allData[i].Code : "");
+            filterData.push(filterTempData);
+        }
+        res.status(200).json(
+            {
+                tableData: filterData
+            });
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+router.post('/post-operation-data', async (req, res) => {
+
+    try {
+
+        const operationModel_obj = new operationModel({
+            open: req.body.open,
+            close: req.body.close,
+            Monday: req.body.Monday,
+            Tuesday: req.body.Tuesday,
+            Wednesday: req.body.Wednesday,
+            Thursday: req.body.Thursday,
+            Friday: req.body.Friday,
+            Saturday: req.body.Saturday,
+            Sunday: req.body.Sunday,
+            halfMonday: req.body.halfMonday,
+            halfMonday: req.body.halfMonday,
+            halfTuesday: req.body.halfTuesday,
+            halfWednesday: req.body.halfWednesday,
+            halfThursday: req.body.halfThursday,
+            halfFriday: req.body.halfFriday,
+            halfSaturday: req.body.halfSaturday,
+            halfSunday: req.body.halfSunday,
+            online: req.body.online,
+        });
+        const dataToSave = await operationModel_obj.save();
+        res.status(200).json({ Message: "Data Saved Sucessfully!" });
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+router.get('/getAll-operation-data', async (req, res) => {
+
+    try {
+        const allData = await operationModel.find();
+        var filterData = [];
+        for (var i = 0; i < allData.length; i++) {
+            var filterTempData = [];
+            // filterTempData.push(allData[i]._id);
+            filterTempData.push(allData[i].open ? allData[i].open : "");
+            filterTempData.push(allData[i].close ? allData[i].close : "");
+            filterTempData.push(allData[i].Monday ? allData[i].Monday : "");
+            filterTempData.push(allData[i].Tuesday ? allData[i].Tuesday : "");
+            filterTempData.push(allData[i].Wednesday ? allData[i].Wednesday : "");
+            filterTempData.push(allData[i].Thursday ? allData[i].Thursday : "");
+            filterTempData.push(allData[i].Friday ? allData[i].Friday : "");
+            filterTempData.push(allData[i].Saturday ? allData[i].Saturday : "");
+            filterTempData.push(allData[i].Sunday ? allData[i].Sunday : "");
+            filterTempData.push(allData[i].halfMonday ? allData[i].halfMonday : "");
+            filterTempData.push(allData[i].halfTuesday ? allData[i].halfTuesday : "");
+            filterTempData.push(allData[i].halfWednesday ? allData[i].halfWednesday : "");
+            filterTempData.push(allData[i].halfThursday ? allData[i].halfThursday : "");
+            filterTempData.push(allData[i].halfFriday ? allData[i].halfFriday : "");
+            filterTempData.push(allData[i].halfSaturday ? allData[i].halfSaturday : "");
+            filterTempData.push(allData[i].halfSunday ? allData[i].halfSunday : "");
+            filterTempData.push(allData[i].online ? allData[i].online : "");
             filterData.push(filterTempData);
         }
         res.status(200).json(

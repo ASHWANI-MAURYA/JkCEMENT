@@ -53,7 +53,7 @@ const EducationCategory = ({ route, props, navigation }) => {
             try {
                 //get  Data by api
                 axios.get(`
-http://192.168.126.78:3000/api/getById-form1Data/` + edit_id, {
+http://192.168.0.100:3000/api/getById-form1Data/` + edit_id, {
                 })
                     .then(res => {
                         // debugger;
@@ -76,7 +76,7 @@ http://192.168.126.78:3000/api/getById-form1Data/` + edit_id, {
         try {
             //get  Data by api
             axios.get(`
-http://192.168.126.78:3000/api/getAll-AwardCategory`, {
+http://192.168.0.100:3000/api/getAll-AwardCategory`, {
             })
                 .then(res => {
                     debugger;
@@ -134,7 +134,7 @@ http://192.168.126.78:3000/api/getAll-AwardCategory`, {
         //Save Data by api
         // debugger;
         axios.patch(`
-http://192.168.126.78:3000/api/post-form1UpdateData/`, {
+http://192.168.0.100:3000/api/post-form1UpdateData/`, {
             _id: edit_id,
             dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
             NameApplicant: NameApplicant,
@@ -184,7 +184,7 @@ http://192.168.126.78:3000/api/post-form1UpdateData/`, {
         try {
             //Save Data by api
             axios.post(`
-            http://192.168.221.78:3000/api/post-form1-data`, {
+            http://192.168.0.100:3000/api/post-form1-data`, {
                 dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
                 NameApplicant: NameApplicant,
                 CertificateNumber: CertificateNumber
