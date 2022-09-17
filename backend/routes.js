@@ -1,10 +1,12 @@
 const express = require('express');
 const Form1Model = require('./Form1Model');
-const  AddressDetailsModules= require('./AddressDetailsModules');
+const AddressDetailsModules = require('./AddressDetailsModules');
 const AwardCategoryModel = require('./AwardCategoryModel');
 const LoginModel = require('./LoginModel');
-const operationModel =require('./operationModel')
+const operationModel = require('./operationModel')
+const document = require('./documentuploadModel')
 const e = require('express');
+let formidable = require('formidable');
 
 const router = express.Router()
 
@@ -66,7 +68,7 @@ router.get('/getAll-AwardCategory', async (req, res) => {
         const data = await AwardCategoryModel.find();
         var filterData = [];
         for (var i = 0; i < data.length; i++) {
-        filterData.push({ label: data[i].name, value: data[i].name });
+            filterData.push({ label: data[i].name, value: data[i].name });
         }
         res.json(filterData);
 
@@ -284,3 +286,129 @@ router.get('/getAll-operation-data', async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
+router.get('/getAll-document', async (req, res) => {
+    try {
+        const data = await document.find();
+        // var filterData = [];
+        // for (var i = 0; i < data.length; i++) {
+        //     filterData.push(data[i].idproofname ? data[i].idproofname : "");
+        //     filterData.push(data[i].idproof ? data[i].idproof : "");
+        //     filterData.push(data[i].profile ? data[i].profile : "");
+        // }
+        res.json(data);
+
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+});
+
+// //Post AwardCategory data
+router.post('/post-document', async (req, res) => {
+    try {
+        // const document_obj = new document({
+        //     idproofname: req.body.idproofname,
+        //     idproof: req.body.idproof,
+        //     profile: req.body.profile
+        // })
+        // const dataToSave = await document_obj.save();
+
+
+
+        //Create an instance of the form object
+        // let form = new formidable.IncomingForm();
+        // console.log(form);
+        // return;
+        //Process the file upload in Node
+        // form.parse(req, function (error, fields, file) {
+        // console.log(file.fileupload);
+
+
+        // let filepath = file.fileupload.filepath;
+        // console.log(file);
+        // let newpath = 'C:/upload-example/';
+        // newpath += file.fileupload.originalFilename;
+
+        // //Copy the uploaded file to a custom folder
+        // fs.rename(filepath, newpath, function () {
+        //     //Send a NodeJS file upload confirmation message
+        //     res.write('NodeJS File Upload Success!');
+        //     res.end();
+        // });
+        // });
+        // console.log("filepath");
+
+
+
+        var FormData = require('form-data');
+        // const buffer = req.files.foo.data // data is the file buffer // foo is the key/file name
+        // var form = new FormData();
+        // form.append('file', buffer);
+        //  form.submit('example.org/upload', function(err, res) {
+        //      res.send("done");
+        //      //Do something here
+        //  });
+
+        // console.log(req.files.UserDoc_IdType.data);
+        // console.log(FormData);
+        // console.log(req.body.IdType);
+
+        // return;
+
+        if (!req.files || Object.keys(req.files).length != 2) {
+            res.status(400).send('No files were uploaded.');
+            return;
+        }
+        if (Object.keys(req.files).length === 2) {
+            if (Object.keys(req.files)[0] != "UserDoc_IdType") {
+                res.status(400).send('No files were uploaded for Id Type.');
+                return;
+            }
+            if (Object.keys(req.files)[1] != "UserDoc_SelectProfile") {
+                res.status(400).send('No files were uploaded for Profile.');
+                return;
+            }
+        }
+
+
+        let sampleFile1 = req.files.UserDoc_IdType;
+
+        uploadPathP1 = __dirname + '/app_images/' + sampleFile1.name;
+
+        uploadPathv1 = 'http://localhost:3000/images/' + sampleFile1.name;
+
+        sampleFile1.mv(uploadPathP1, function (err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+        });
+
+
+        let sampleFile2 = req.files.UserDoc_SelectProfile;
+
+        uploadPathP1 = __dirname + '/app_images/' + sampleFile2.name;
+
+
+        uploadPathv2 = 'http://localhost:3000/images/' + sampleFile1.name;
+
+        sampleFile2.mv(uploadPathP1, function (err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+        });
+
+        const document_obj = new document({
+            idproofname: req.body.IdType,
+            idproof: uploadPathv1,
+            profile: uploadPathv2
+        })
+        const dataToSave = await document_obj.save();
+
+
+
+        res.status(200).json({ Message: "Document Upload Sucessfully!" });
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+})

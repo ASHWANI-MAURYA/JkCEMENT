@@ -1,10 +1,13 @@
-import { View, Text, ScrollView, Pressable } from 'react-native'
+import { View, Text, ScrollView, Pressable, Alert } from 'react-native'
 import React, { useState } from 'react'
 import Dropdown from '../Component/dropdown';
 import Imagepick from '../Component/imagepick';
 import { colors } from '../Component/colors'
+import axios from "axios";
 // import { RNCamera } from 'react-native-camera'
 const DocumentsDetails = ({ navigation }) => {
+    const [image1, setimage1] = useState("")
+    const [image2, setimage2] = useState("")
     const idProof =
         [
             { label: 'Adhar Card', value: 'Adhar Card' },
@@ -14,6 +17,31 @@ const DocumentsDetails = ({ navigation }) => {
     const [dataAwardCategorySelectionId, setdataAwardCategorySelectionId] = useState("")
     function submitform() {
         console.log(dataAwardCategorySelectionId.value);
+        console.log(image1);
+        console.log(image2);
+        try {
+            axios.get(`
+            http://192.168.0.100:3000/api/post-document`, {
+            idproofname: dataAwardCategorySelectionId.value,
+            idproof: image1,
+            profile: image2
+
+            })
+                .then(res => {
+                    // debugger;
+                    // console.log(res.data);
+                    Alert.alert("done")
+                    setdataAwardCategory(res.data);
+                })
+                .catch(e => {
+                    console.log("not posted");
+                });
+        }
+        catch (error) {
+            console.log(error.message);
+        }
+
+
     }
     return (
         <ScrollView>
@@ -24,13 +52,13 @@ const DocumentsDetails = ({ navigation }) => {
             <Text style={{ marginHorizontal: 20, marginTop: 15, borderRadius: 5, fontSize: 18 }}>Select Id Type</Text>
             <Dropdown bindDataAwardCategory={idProof} my_onChangeText={setdataAwardCategorySelectionId} my_value={dataAwardCategorySelectionId} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <Imagepick />
+                <Imagepick onSetImage={setimage1} />
             </View>
             <Text style={{ textAlign: 'center', marginVertical: 10, fontWeight: '400', fontSize: 18 }}>{dataAwardCategorySelectionId.value}</Text>
             {/* <Dropdown bindDataAwardCategory={dataAwardCategory} /> */}
             <Text style={{ marginHorizontal: 20, marginTop: 15, borderRadius: 5, fontSize: 18 }}>Select Profile</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginVertical: 20 }}>
-                <Imagepick />
+                <Imagepick onSetImage={setimage2} />
             </View>
             <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginBottom: 20, marginVertical: 20 }}>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
@@ -47,4 +75,4 @@ const DocumentsDetails = ({ navigation }) => {
     )
 }
 
-export default DocumentsDetails
+export default DocumentsDetails;

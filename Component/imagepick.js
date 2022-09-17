@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as ImagePicker from 'expo-image-picker';
 import { Button, Image, View, Platform, Text, TouchableOpacity } from 'react-native';
-export default function GalleryComponenet() {
+export default function GalleryComponenet({onSetImage}) {
 	const [image, setImage] = useState(null);
 	useEffect(() => {
 		(async () => {
@@ -17,13 +17,16 @@ export default function GalleryComponenet() {
 	const chooseImg = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
-			aspect: [4, 3],
+			aspect: [16, 16],
 			quality: 1,
 			allowsEditing: true,
 		});
-		console.log(result);
+		// console.log(result);
 		if (!result.cancelled) {
 			setImage(result.uri);
+			if(onSetImage){
+				onSetImage(result.uri)
+			}
 		}
 	};
 	return (

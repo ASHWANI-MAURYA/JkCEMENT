@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
 const url = 'mongodb://127.0.0.1:27017/JKCEMENT'
 mongoose.connect(url, { useNewUrlParser: true })
 const database = mongoose.connection;
@@ -52,8 +53,13 @@ app.use(function (req, res, next) {
 //   swaggerUi.setup(swaggerDocument)
 // );
 
-
+app.use(fileUpload());
 app.use('/api', routes)
+
+// Function to serve all static files
+// inside public directory.
+app.use(express.static('public')); 
+app.use('/images/', express.static('app_images'));
 
 // const outputFile = './swagger.json';
 // const endpointsFiles = ['./routes.js']; // root file where the route starts.
