@@ -20,12 +20,12 @@ const StackNavigation = () => {
     // <NavigationContainer>
     <>
       <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#351401' }, headerTintColor: 'white', }}>
-        <Stack.Screen name='LoginPage' component={LoginPage} options={{ title: 'Login' }} />
+        {/* <Stack.Screen name='LoginPage' component={LoginPage} options={{ title: 'Login' }} />
         <Stack.Screen name='EducationRegistration' component={EducationRegistration} options={{ title: 'Education Registration' }} />
         <Stack.Screen name='AdminPanal' component={AdminPanal} options={{ title: 'Admin Panal' }} />
         <Stack.Screen name='PersonalInformation' component={PersonalInformation} options={{ title: 'Personal Information' }} />
         <Stack.Screen name='AddressDetails' component={AddressDetails} options={{ title: 'Address Details' }} />
-        <Stack.Screen name='OperationDetails' component={OperationDetails} options={{ title: 'Operation Details' }} />
+        <Stack.Screen name='OperationDetails' component={OperationDetails} options={{ title: 'Operation Details' }} /> */}
         <Stack.Screen name='DocumentsDetails' component={DocumentsDetails} options={{ title: 'Documents Details' }} />
         <Stack.Screen name='PackageSelection' component={PackageSelection} options={{ title: 'Package Selection' }} />
         <Stack.Screen name='credential' component={credential} options={{ title: 'Credential' }} />

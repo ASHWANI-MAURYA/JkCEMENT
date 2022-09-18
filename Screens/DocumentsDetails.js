@@ -16,30 +16,62 @@ const DocumentsDetails = ({ navigation }) => {
         ];
     const [dataAwardCategorySelectionId, setdataAwardCategorySelectionId] = useState("")
     function submitform() {
-        console.log(dataAwardCategorySelectionId.value);
-        console.log(image1);
-        console.log(image2);
-        try {
-            axios.get(`
-            http://192.168.0.100:3000/api/post-document`, {
-            idproofname: dataAwardCategorySelectionId.value,
-            idproof: image1,
-            profile: image2
 
+        // console.log(dataAwardCategorySelectionId.value);
+        //console.log(image1.uri);
+        // console.log(image2);
+        // try {
+
+        if (!String(dataAwardCategorySelectionId.value)) {
+            Alert.alert("", "Id Type selection is required!");
+            return;
+        }
+        if (!image1) {
+            Alert.alert("", "Id Type image selection is required!");
+            return;
+        }
+        if (!image2) {
+            Alert.alert("", "Profile selection is required!");
+            return;
+        }
+
+        const bodyFormData = new FormData();
+        var current_datetime = String(new Date().toLocaleString());
+        bodyFormData.append('UserDoc_IdType', {
+            uri: image1.uri,
+            name: current_datetime+'_IdType.jpg',
+            type: 'image/jpeg',
+        });
+        bodyFormData.append('UserDoc_SelectProfile', {
+            uri: image2.uri,
+            name: current_datetime+'_SelectProfile.jpg',
+            type: 'image/jpeg',
+        });
+        bodyFormData.append('IdType', String(dataAwardCategorySelectionId.value));
+
+
+        axios.post(`http://192.168.221.78:3000/api/post-document`, bodyFormData, {
+            headers: { "Content-Type": "multipart/form-data" },
+            Accept: "application/json",
+            
+        })
+            .then(function (response) {
+                //handle success
+                Alert.alert("Document Upload Status", response.data.Message);
+                //console.warn(response);    
             })
-                .then(res => {
-                    // debugger;
-                    // console.log(res.data);
-                    Alert.alert("done")
-                    setdataAwardCategory(res.data);
-                })
-                .catch(e => {
-                    console.log("not posted");
-                });
-        }
-        catch (error) {
-            console.log(error.message);
-        }
+            .catch(function (error) {
+                //handle error
+                Alert.alert("Error from react native api call catch", JSON.stringify(error));
+                console.log("Error from react native api call catch : " +  JSON.stringify(error));
+            });
+
+
+
+        // }
+        // catch (error) {
+        //     console.log("3"+error.message);
+        // }
 
 
     }

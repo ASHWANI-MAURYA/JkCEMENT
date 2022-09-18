@@ -7,6 +7,7 @@ const operationModel = require('./operationModel')
 const document = require('./documentuploadModel')
 const e = require('express');
 let formidable = require('formidable');
+const fs = require('fs-extra');
 
 const router = express.Router()
 
@@ -306,109 +307,100 @@ router.get('/getAll-document', async (req, res) => {
 // //Post AwardCategory data
 router.post('/post-document', async (req, res) => {
     try {
-        // const document_obj = new document({
-        //     idproofname: req.body.idproofname,
-        //     idproof: req.body.idproof,
-        //     profile: req.body.profile
-        // })
-        // const dataToSave = await document_obj.save();
+        var message = "";
+        var bool = true;
 
+        let asd = req.files.UserDoc_IdType;
+        console.log(asd);
 
+        // var buffer = Buffer.from(asd.data, 'base64');
+        var uploadPathP1 = `${__dirname}/app_images/` + asd.name;
+        // now buffer contains the contents of the file we just read
+        await fs.writeFile(uploadPathP1, asd.data, 'utf-8').then(() => {
+            //res.status(200).sendFile(`${cwd}/${newFileName}`);
+        });
 
-        //Create an instance of the form object
-        // let form = new formidable.IncomingForm();
-        // console.log(form);
-        // return;
-        //Process the file upload in Node
-        // form.parse(req, function (error, fields, file) {
-        // console.log(file.fileupload);
-
-
-        // let filepath = file.fileupload.filepath;
-        // console.log(file);
-        // let newpath = 'C:/upload-example/';
-        // newpath += file.fileupload.originalFilename;
-
-        // //Copy the uploaded file to a custom folder
-        // fs.rename(filepath, newpath, function () {
-        //     //Send a NodeJS file upload confirmation message
-        //     res.write('NodeJS File Upload Success!');
-        //     res.end();
+        // await asd.mv(uploadPathP1, function (err) {
+        //     // res.status(200).json({ Message:err});
+        //     // return;
+        //     console.log(JSON.stringify(err));
+        //     res.status(200).json({ Message: JSON.stringify(err) });
         // });
-        // });
-        // console.log("filepath");
+        // res.status(200).json({ Message:uploadPathP1});
+        return;
 
 
-
-        var FormData = require('form-data');
-        // const buffer = req.files.foo.data // data is the file buffer // foo is the key/file name
-        // var form = new FormData();
-        // form.append('file', buffer);
-        //  form.submit('example.org/upload', function(err, res) {
-        //      res.send("done");
-        //      //Do something here
-        //  });
-
-        // console.log(req.files.UserDoc_IdType.data);
-        // console.log(FormData);
-        // console.log(req.body.IdType);
-
-        // return;
+        if (!req.body.IdType) {
+            message = "Id Type is required!";
+            bool = false;
+            //res.status(200).json({ Message: "Id Type is required!" });
+            //return;
+        }
 
         if (!req.files || Object.keys(req.files).length != 2) {
-            res.status(400).send('No files were uploaded.');
-            return;
+            message = "No files were uploaded.!";
+            bool = false;
+            //res.status(200).json({ Message: "No files were uploaded.!" });
+            //return;
         }
         if (Object.keys(req.files).length === 2) {
             if (Object.keys(req.files)[0] != "UserDoc_IdType") {
-                res.status(400).send('No files were uploaded for Id Type.');
-                return;
+                message = "No files were uploaded for Id Type.";
+                //res.status(200).json({ Message: "No files were uploaded for Id Type." });
+                //return;
+                bool = false;
             }
             if (Object.keys(req.files)[1] != "UserDoc_SelectProfile") {
-                res.status(400).send('No files were uploaded for Profile.');
-                return;
+                message = "No files were uploaded for Profile.";
+                //res.status(200).json({ Message: "No files were uploaded for Profile." });
+                //return;
+                bool = false;
             }
         }
 
+        if (bool) {
+            let sampleFile1 = req.files.UserDoc_IdType;
 
-        let sampleFile1 = req.files.UserDoc_IdType;
+            uploadPathP1 = __dirname + '/app_images/' + sampleFile1.name;
 
-        uploadPathP1 = __dirname + '/app_images/' + sampleFile1.name;
+            uploadPathv1 = 'http://localhost:3000/images/' + sampleFile1.name;
 
-        uploadPathv1 = 'http://localhost:3000/images/' + sampleFile1.name;
+            sampleFile1.mv(uploadPathP1, function (err) {
+                if (err) {
+                    message = err;
+                    //return res.status(200).json({ Message: err });
+                }
+            });
 
-        sampleFile1.mv(uploadPathP1, function (err) {
-            if (err) {
-                return res.status(500).send(err);
+
+            let sampleFile2 = req.files.UserDoc_SelectProfile;
+
+            uploadPathP1 = __dirname + '/app_images/' + sampleFile2.name;
+
+
+            uploadPathv2 = 'http://localhost:3000/images/' + sampleFile1.name;
+
+            sampleFile2.mv(uploadPathP1, function (err) {
+                if (err) {
+                    message = err;
+                    //return res.status(200).json({ Message: err });
+                }
+            });
+
+            const document_obj = new document({
+                idproofname: req.body.IdType,
+                idproof: uploadPathv1,
+                profile: uploadPathv2
+            })
+            const dataToSave = await document_obj.save();
+            if (message == "") {
+                message = "Document Upload Sucessfully!";
             }
-        });
+        }
+        res.status(200).json({ Message: message });
 
-
-        let sampleFile2 = req.files.UserDoc_SelectProfile;
-
-        uploadPathP1 = __dirname + '/app_images/' + sampleFile2.name;
-
-
-        uploadPathv2 = 'http://localhost:3000/images/' + sampleFile1.name;
-
-        sampleFile2.mv(uploadPathP1, function (err) {
-            if (err) {
-                return res.status(500).send(err);
-            }
-        });
-
-        const document_obj = new document({
-            idproofname: req.body.IdType,
-            idproof: uploadPathv1,
-            profile: uploadPathv2
-        })
-        const dataToSave = await document_obj.save();
-
-
-
-        res.status(200).json({ Message: "Document Upload Sucessfully!" });
     }
     catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(200).json({ Message: "hagjh : " + error.message });
     }
 })
