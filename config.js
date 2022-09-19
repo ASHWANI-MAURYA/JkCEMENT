@@ -1,1 +1,6 @@
-export const API_BASE_URL = 'http://192.168.221.78:3000/api';
+
+
+const baseUrl = {
+    baseURL: "http://192.168.221.78:3000/api",
+};
+export default baseUrl;

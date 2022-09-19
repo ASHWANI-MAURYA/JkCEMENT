@@ -4,7 +4,7 @@ import Dropdown from '../Component/dropdown';
 import Imagepick from '../Component/imagepick';
 import { colors } from '../Component/colors'
 import axios from "axios";
-import API_BASE_URL from '../config';
+import BaseURL from '../config';
 // import { RNCamera } from 'react-native-camera'
 const DocumentsDetails = ({ navigation }) => {
     const [image1, setimage1] = useState("");
@@ -26,7 +26,7 @@ const DocumentsDetails = ({ navigation }) => {
         //console.log(image1.uri);
         // console.log(image2);
         try {
-           
+
             if (!String(dataAwardCategorySelectionId.value)) {
                 Alert.alert("", "Id Type selection is required!");
                 return;
@@ -54,17 +54,18 @@ const DocumentsDetails = ({ navigation }) => {
             });
             bodyFormData.append('IdType', String(dataAwardCategorySelectionId.value));
 
-            setIsNextDisabled(true);
-            console.log(`${API_BASE_URL}/post-document`);
+            setIsNextDisabled(false);
+
             // return;
 
-        
-            axios.post(`http://192.168.221.78:3000/api/post-document`, bodyFormData, {
+
+            // axios.post(`http://192.168.221.78:3000/api/post-document`, bodyFormData, {
+            axios.post(`${BaseURL.baseURL}/post-document`, bodyFormData, {
                 headers: { "Content-Type": "multipart/form-data" },
                 Accept: "application/json",
 
             })
-            
+
                 .then(function (response) {
                     setIsNextDisabled(false);
                     //handle success
@@ -79,6 +80,8 @@ const DocumentsDetails = ({ navigation }) => {
                 });
         }
         catch (error) {
+            // console.log(`${BASE_URL}/post-document`);
+            console.log("kjhgfdsakhygfgvcfgcxzsdfrgvcfg");
             Alert.alert("Error from react native api call catch", JSON.stringify(error));
         }
 
