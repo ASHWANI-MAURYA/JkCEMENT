@@ -5,6 +5,7 @@ import Imagepick from '../Component/imagepick';
 import { colors } from '../Component/colors'
 import axios from "axios";
 import config from '../config';
+
 // import { RNCamera } from 'react-native-camera'
 const DocumentsDetails = ({ navigation }) => {
     const [image1, setimage1] = useState("");
@@ -54,10 +55,12 @@ const DocumentsDetails = ({ navigation }) => {
             });
             bodyFormData.append('IdType', String(dataAwardCategorySelectionId.value));
 
+
             setIsNextDisabled(true);
 
 
             axios.post(`${config.BASE_URL}/post-document`, bodyFormData, {
+
                 headers: { "Content-Type": "multipart/form-data" },
                 Accept: "application/json",
 
@@ -77,6 +80,8 @@ const DocumentsDetails = ({ navigation }) => {
                 });
         }
         catch (error) {
+            // console.log(`${BASE_URL}/post-document`);
+            console.log("kjhgfdsakhygfgvcfgcxzsdfrgvcfg");
             Alert.alert("Error from react native api call catch", JSON.stringify(error));
         }
 
