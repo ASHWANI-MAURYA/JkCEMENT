@@ -30,6 +30,7 @@ export default function GalleryComponenet({ onSetImage }) {
 			setImage(result.uri);
 			if(onSetImage){
 				onSetImage(result)
+				
 			}
 		}
 

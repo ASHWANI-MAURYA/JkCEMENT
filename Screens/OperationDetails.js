@@ -11,7 +11,7 @@ const OperationDetails = ({ navigation, }) => {
 
     try {
       //Save Data by api
-      axios.post(`http://192.168.0.100:3000/api/post-operation-data`, {
+      axios.post(`http://192.168.47.78:3000/api/post-operation-data`, {
         online: online,
         Monday: Monday,
         Tuesday: Tuesday,

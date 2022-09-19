@@ -5,6 +5,7 @@ const AwardCategoryModel = require('./AwardCategoryModel');
 const LoginModel = require('./LoginModel');
 const operationModel = require('./operationModel')
 const document = require('./documentuploadModel')
+const Credential = require('./Credential')
 const e = require('express');
 let formidable = require('formidable');
 const fs = require('fs-extra');
@@ -307,62 +308,74 @@ router.get('/getAll-document', async (req, res) => {
 // //Post AwardCategory data
 router.post('/post-document', async (req, res) => {
     try {
+        console.log((req.files.UserDoc_IdType.size / (1024 * 1024)));
+        console.log(req.files.UserDoc_IdType.size);
+        
         var message = "";
         var bool = true;
 
         let asd = req.files.UserDoc_IdType;
-        console.log(asd);
 
-        // var buffer = Buffer.from(asd.data, 'base64');
-        var uploadPathP1 = `${__dirname}/app_images/` + asd.name;
-        // now buffer contains the contents of the file we just read
-        await fs.writeFile(uploadPathP1, asd.data, 'utf-8').then(() => {
-            //res.status(200).sendFile(`${cwd}/${newFileName}`);
-        });
-
-        // await asd.mv(uploadPathP1, function (err) {
-        //     // res.status(200).json({ Message:err});
-        //     // return;
-        //     console.log(JSON.stringify(err));
-        //     res.status(200).json({ Message: JSON.stringify(err) });
+        // var uploadPathP1 = `${__dirname}/app_images/` + asd.name;
+        // fs.writeFile(uploadPathP1, asd.data, { encoding: 'base64' }, function (err) {
+        //     console.log('File created');
         // });
-        // res.status(200).json({ Message:uploadPathP1});
-        return;
+        // if(req.files.UserDoc_IdType.size > 1024*1024 )
+        // {
+        //     message = "Invalid Id Type Image size ? Only 1MB image are valid!";
+        //     bool = false; 
+        //     console.log("validation is not working")
+        // }
 
 
+        if ((req.files.UserDoc_IdType.size <= (1024*1024)) > 1) {
+            console.log(`File does not support. Files type must be ${req.files.UserDoc_IdType.size(", ")}`);
+        }
+
+        
         if (!req.body.IdType) {
             message = "Id Type is required!";
             bool = false;
             //res.status(200).json({ Message: "Id Type is required!" });
             //return;
         }
-
-        if (!req.files || Object.keys(req.files).length != 2) {
+        else if (!req.files || Object.keys(req.files).length != 2) {
             message = "No files were uploaded.!";
             bool = false;
             //res.status(200).json({ Message: "No files were uploaded.!" });
             //return;
         }
-        if (Object.keys(req.files).length === 2) {
+        else if (Object.keys(req.files).length === 2) {
             if (Object.keys(req.files)[0] != "UserDoc_IdType") {
                 message = "No files were uploaded for Id Type.";
                 //res.status(200).json({ Message: "No files were uploaded for Id Type." });
                 //return;
                 bool = false;
             }
-            if (Object.keys(req.files)[1] != "UserDoc_SelectProfile") {
+            else if (Object.keys(req.files)[1] != "UserDoc_SelectProfile") {
                 message = "No files were uploaded for Profile.";
                 //res.status(200).json({ Message: "No files were uploaded for Profile." });
                 //return;
                 bool = false;
             }
         }
+        else if (String(asd.name.split('.')[1]).toUpperCase() != "JPG" || String(asd.name.split('.')[1]).toUpperCase() != "JPEG" || String(asd.name.split('.')[1]).toUpperCase() != "PNG") {
+            message = "Invalid Id Type Image format ? only (jpg,jpeg,png) images are required!";
+            bool = false;
+        }
+        // else if((req.files.UserDoc_IdType.size / (1024*1024)) > 1)
+        // {
+        //     message = "Invalid Id Type Image size ? Only 1MB image are valid!";
+        //     bool = false; 
+        // }
 
         if (bool) {
             let sampleFile1 = req.files.UserDoc_IdType;
 
-            uploadPathP1 = __dirname + '/app_images/' + sampleFile1.name;
-
+            var uploadPathP1 = `${__dirname}/app_images/` + sampleFile1.name;
+            fs.writeFile(uploadPathP1, sampleFile1.data, { encoding: 'base64' }, function (err) {
+                console.log('File created');
+            });
             uploadPathv1 = 'http://localhost:3000/images/' + sampleFile1.name;
 
             sampleFile1.mv(uploadPathP1, function (err) {
@@ -375,10 +388,12 @@ router.post('/post-document', async (req, res) => {
 
             let sampleFile2 = req.files.UserDoc_SelectProfile;
 
-            uploadPathP1 = __dirname + '/app_images/' + sampleFile2.name;
+            var uploadPathP2 = `${__dirname}/app_images/` + sampleFile2.name;
+            fs.writeFile(uploadPathP2, sampleFile2.data, { encoding: 'base64' }, function (err) {
+                console.log('File created');
+            });
 
-
-            uploadPathv2 = 'http://localhost:3000/images/' + sampleFile1.name;
+            uploadPathv2 = 'http://localhost:3000/images/' + sampleFile2.name;
 
             sampleFile2.mv(uploadPathP1, function (err) {
                 if (err) {
@@ -393,14 +408,59 @@ router.post('/post-document', async (req, res) => {
                 profile: uploadPathv2
             })
             const dataToSave = await document_obj.save();
+            console.log(uploadPathv1);
+            console.log(uploadPathv2);
             if (message == "") {
                 message = "Document Upload Sucessfully!";
             }
+            //await new Promise(resolve => setTimeout(resolve, 5000));
         }
         res.status(200).json({ Message: message });
 
     }
     catch (error) {
-        res.status(200).json({ Message: "hagjh : " + error.message });
+        res.status(200).json({ Message: error.message });
     }
 })
+
+router.post('/post-credential-data', async (req, res) => {
+
+    try {
+
+        const Credential_obj = new Credential({
+            Email: req.body.Email,
+            Password: req.body.Password,
+            RePassword: req.body.RePassword,
+        });
+        const dataToSave = await Credential_obj.save();
+        res.status(200).json({ Message: "Data Saved Sucessfully!" });
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+//Post Form 1 Data Method
+router.get('/getAll-credential-data', async (req, res) => {
+
+    try {
+        const allData = await Credential.find();
+        var filterData = [];
+        for (var i = 0; i < allData.length; i++) {
+            var filterTempData = [];
+            // filterTempData.push(allData[i]._id);
+            filterTempData.push(allData[i].Email ? allData[i].Email : "");
+            filterTempData.push(allData[i].Password ? allData[i].Password : "");
+            filterTempData.push(allData[i].RePassword ? allData[i].RePassword : "");
+            filterTempData.push(allData[i]._id ? allData[i]._id : "");
+            filterData.push(filterTempData);
+        }
+        res.status(200).json(
+            {
+                tableData: filterData
+            });
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});

@@ -1,13 +1,15 @@
-import { View, Text, ScrollView, Pressable, Alert } from 'react-native'
+import { View, Text, ScrollView, Pressable, Alert, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import Dropdown from '../Component/dropdown';
 import Imagepick from '../Component/imagepick';
 import { colors } from '../Component/colors'
 import axios from "axios";
+import API_BASE_URL from '../config';
 // import { RNCamera } from 'react-native-camera'
 const DocumentsDetails = ({ navigation }) => {
-    const [image1, setimage1] = useState("")
-    const [image2, setimage2] = useState("")
+    const [image1, setimage1] = useState("");
+    const [image2, setimage2] = useState("");
+    const [IsNextDisabled, setIsNextDisabled] = useState(false);
     const idProof =
         [
             { label: 'Adhar Card', value: 'Adhar Card' },
@@ -16,62 +18,69 @@ const DocumentsDetails = ({ navigation }) => {
         ];
     const [dataAwardCategorySelectionId, setdataAwardCategorySelectionId] = useState("")
     function submitform() {
-
+        if (IsNextDisabled) {
+            Alert.alert("Warning", "Please wait while document is uploding...");
+            return;
+        }
         // console.log(dataAwardCategorySelectionId.value);
         //console.log(image1.uri);
         // console.log(image2);
-        // try {
+        try {
+           
+            if (!String(dataAwardCategorySelectionId.value)) {
+                Alert.alert("", "Id Type selection is required!");
+                return;
+            }
+            if (!image1) {
+                Alert.alert("", "Id Type image selection is required!");
+                return;
+            }
+            if (!image2) {
+                Alert.alert("", "Profile selection is required!");
+                return;
+            }
 
-        if (!String(dataAwardCategorySelectionId.value)) {
-            Alert.alert("", "Id Type selection is required!");
-            return;
-        }
-        if (!image1) {
-            Alert.alert("", "Id Type image selection is required!");
-            return;
-        }
-        if (!image2) {
-            Alert.alert("", "Profile selection is required!");
-            return;
-        }
-
-        const bodyFormData = new FormData();
-        var current_datetime = String(new Date().toLocaleString());
-        bodyFormData.append('UserDoc_IdType', {
-            uri: image1.uri,
-            name: current_datetime+'_IdType.jpg',
-            type: 'image/jpeg',
-        });
-        bodyFormData.append('UserDoc_SelectProfile', {
-            uri: image2.uri,
-            name: current_datetime+'_SelectProfile.jpg',
-            type: 'image/jpeg',
-        });
-        bodyFormData.append('IdType', String(dataAwardCategorySelectionId.value));
-
-
-        axios.post(`http://192.168.221.78:3000/api/post-document`, bodyFormData, {
-            headers: { "Content-Type": "multipart/form-data" },
-            Accept: "application/json",
-            
-        })
-            .then(function (response) {
-                //handle success
-                Alert.alert("Document Upload Status", response.data.Message);
-                //console.warn(response);    
-            })
-            .catch(function (error) {
-                //handle error
-                Alert.alert("Error from react native api call catch", JSON.stringify(error));
-                console.log("Error from react native api call catch : " +  JSON.stringify(error));
+            const bodyFormData = new FormData();
+            var currentdata = String(Math.random()).replace('0.', "");//String(new Date());
+            bodyFormData.append('UserDoc_IdType', {
+                uri: image1.uri,
+                name: currentdata + '_IdType.jpg',
+                type: 'image/jpeg',
             });
+            bodyFormData.append('UserDoc_SelectProfile', {
+                uri: image2.uri,
+                name: currentdata + '_SelectProfile.jpg',
+                type: 'image/jpeg',
+            });
+            bodyFormData.append('IdType', String(dataAwardCategorySelectionId.value));
 
+            setIsNextDisabled(true);
+            console.log(`${API_BASE_URL}/post-document`);
+            // return;
 
+        
+            axios.post(`http://192.168.221.78:3000/api/post-document`, bodyFormData, {
+                headers: { "Content-Type": "multipart/form-data" },
+                Accept: "application/json",
 
-        // }
-        // catch (error) {
-        //     console.log("3"+error.message);
-        // }
+            })
+            
+                .then(function (response) {
+                    setIsNextDisabled(false);
+                    //handle success
+                    Alert.alert("Document Upload Status", response.data.Message);
+                    // console.log(bodyFormData);    
+                })
+                .catch(function (error) {
+                    // setNext(false);
+                    //handle error
+                    Alert.alert("Error from react native api call catch", JSON.stringify(error));
+                    console.log("Error from react native api call catch : " + JSON.stringify(error));
+                });
+        }
+        catch (error) {
+            Alert.alert("Error from react native api call catch", JSON.stringify(error));
+        }
 
 
     }
@@ -100,11 +109,23 @@ const DocumentsDetails = ({ navigation }) => {
                     <Pressable onPress={
                         // () => navigation.navigate('PackageSelection')
                         submitform
-                    } style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
+                    } style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  >
+                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>
+                            <ActivityIndicator animating={IsNextDisabled}
+                                color='white'
+
+                            />
+                            {IsNextDisabled ? " Wait..." : "Next"}</Text>
+                    </Pressable>
+
                 </View>
+
             </View>
+
         </ScrollView>
     )
 }
 
+
 export default DocumentsDetails;
+

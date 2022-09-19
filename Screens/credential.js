@@ -1,49 +1,117 @@
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native'
 import { colors } from '../Component/colors'
-import React from 'react'
-
+import React, { useState } from 'react'
+import axios from "axios";
 const Credential = ({ navigation }) => {
+    const [Email, setEmail] = useState("");
+    const [isEmail, setisEmail] = useState("");
+    const [Password, setPassword] = useState("");
+    const [isPassword, setisPassword] = useState("");
+    const [RePassword, setRePassword] = useState("");
+    const [isRePassword, setisRePassword] = useState("");
+    function formSubmit() {
+        if (!Email || Email.value == "") {
+            setisEmail("false");
+            return;
+        }
+        else {
+            setisEmail("");
+        }
+
+        if (isPassword == "") {
+            setisPassword("false");
+            return;
+        }
+        else {
+            setisPassword("");
+        }
+        if (isRePassword == "") {
+            setisRePassword("false");
+            return;
+        }
+        else {
+            setisRePassword("");
+        }
+        if (Password === RePassword) {
+            try {
+
+                //Save Data by api
+                axios.post(`
+                http://192.168.221.78:3000/api/post-credential-data`, {
+                    Email: Email,
+                    Password: Password,
+                    RePassword: RePassword
+                })
+                    .then(res => {
+                        debugger;
+                        let userInfo = res.data;
+                        Alert.alert(
+                            "Credential Data",
+                            userInfo.Message,
+                            [
+
+                                { text: "OK", }
+                            ]
+                        );
+                        navigation.navigate('BackendApproval')
+
+                    })
+                    .catch(e => {
+                        console.log(`post error ${e}`);
+                    });
+            }
+            catch (error) {
+                console.log(error.message);
+            }
+        } else {
+            Alert.alert("Credential", "Entered Password did not matched !")
+        }
+
+    }
     return (
         <View>
             <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 0 }}>
                 <View style={style.ViewBok}>
                     <View style={{ paddingVertical: 10 }}>
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 10 }}>User Id</Text>
-                        <TextInput placeholder='User ID' keyboardType={'phone-pad'} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
-                        {/* <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
+                        <TextInput placeholder='User ID' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} onChangeText={setEmail} autoFocus={true} maxLength={12} />
+                        <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
                                 isEmail == "false"
                                     ? "email is Required*"
                                     : ''
                             }
-                        </Text> */}
+                        </Text>
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Password</Text>
-                        <TextInput secureTextEntry={true} keyboardType={'phone-pad'} placeholder='Password' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
-                        {/* <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
+                        <TextInput secureTextEntry={true} placeholder='Password' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} onChangeText={setPassword} autoFocus={true} maxLength={12} />
+                        <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
                                 isPassword == "false"
                                     ? "Password is Required*"
                                     : ""
                             }
-                        </Text> */}
+                        </Text>
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Re-Enter Password</Text>
-                        <TextInput secureTextEntry={true} keyboardType={'phone-pad'} placeholder='Re-Enter Password' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
-                        {/* <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
+                        <TextInput placeholder='Re-Enter Password' style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} onChangeText={setRePassword} secureTextEntry={true} autoFocus={true} maxLength={12} />
+                        <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
-                                isPassword == "false"
-                                    ? "Password is Required*"
+                                isRePassword == "false"
+                                    ? "Re-Enter Password is Required*"
                                     : ""
                             }
-                        </Text> */}
+                        </Text>
                     </View>
                 </View>
             </View>
-            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between',marginVertical:20 }}>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginVertical: 20 }}>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
                     <Pressable onPress={() => navigation.navigate('AddressDetails')} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
                 </View>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
-                    <Pressable onPress={() => navigation.navigate('BackendApproval')} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
+                    <Pressable onPress={
+                        // () => navigation.navigate('BackendApproval')
+                        formSubmit
+                    } style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Next </Text></Pressable>
                 </View>
             </View>
         </View>
