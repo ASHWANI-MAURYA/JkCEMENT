@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 // import Date from './Date'
 const AdminPanal = ({ route, navigation }) => {
+  //By Vinish
   // const { UserId } = route.params;
   // const { password } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
