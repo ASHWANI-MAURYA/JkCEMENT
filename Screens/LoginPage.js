@@ -1,6 +1,7 @@
 import { View, Text, TextInput, StyleSheet, Button,Pressable,ScrollView } from 'react-native'
 import React, { useState } from 'react';
 import axios from "axios";
+import BaseURL from '../config';
 import { colors } from '../Component/colors'
 const LoginPage = ({ navigation }) => {
     const [Email, setEmail] = useState("");
@@ -32,15 +33,14 @@ const LoginPage = ({ navigation }) => {
         try {
             // debugger;
             //get data by api
-            axios.post(`
-http://192.168.47.78:3000/api/get-UserData`, {
+            axios.post(`${BaseURL.baseURL}/get-UserData`, {
                 Email: Email,
                 Password: Password
             })
                 .then(res => {
                     // debugger;
                     let userInfo = res.data;
-                    //console.log(userInfo);
+                    // console.log(userInfo);
                     if(userInfo.getUserData.length)
                     {
                         // console.log(userInfo.getUserData[0].Password);

@@ -1,6 +1,7 @@
 import { View, Text, Modal, StyleSheet, Pressable, ScrollView, Alert } from 'react-native'
 import Table from '../Component/table'
 import React, { useState, useEffect } from 'react';
+import BaseURL from '../config';
 import axios from "axios";
 // import Date from './Date'
 const AdminPanal = ({ route, navigation }) => {
@@ -38,8 +39,7 @@ const AdminPanal = ({ route, navigation }) => {
   }, []);
   function loadPageData() {
     try {
-      axios.get(`
-http://192.168.47.78:3000/api/getAll-form1Data`, {
+      axios.get(`${BaseURL.baseURL}/getAll-form1Data`, {
       })
         .then(res => {
           // debugger;
@@ -96,8 +96,7 @@ http://192.168.47.78:3000/api/getAll-form1Data`, {
           style: "cancel"
         },
         {
-          text: "OK", onPress: () => axios.delete(`
-http://192.168.47.78:3000/api/delete-Form1Data/` + val, {
+          text: "OK", onPress: () => axios.delete(`${BaseURL.baseURL}/delete-Form1Data/` + val, {
           })
             .then(res => {
               // debugger;

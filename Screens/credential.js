@@ -2,6 +2,7 @@ import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-nativ
 import { colors } from '../Component/colors'
 import React, { useState } from 'react'
 import axios from "axios";
+import BaseURL from '../config';
 const Credential = ({ navigation }) => {
     const [Email, setEmail] = useState("");
     const [isEmail, setisEmail] = useState("");
@@ -36,8 +37,7 @@ const Credential = ({ navigation }) => {
             try {
 
                 //Save Data by api
-                axios.post(`
-                http://192.168.221.78:3000/api/post-credential-data`, {
+                axios.post(`${BaseURL.baseURL}/post-credential-data`, {
                     Email: Email,
                     Password: Password,
                     RePassword: RePassword

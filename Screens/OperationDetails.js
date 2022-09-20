@@ -5,13 +5,14 @@ import { colors } from '../Component/colors';
 import TimeingDropdown from '../Component/TimeingDropdown';
 import { Checkbox } from 'react-native-paper';
 import axios from "axios";
+import BaseURL from '../config';
 const OperationDetails = ({ navigation, }) => {
 
   function submitform() {
 
     try {
       //Save Data by api
-      axios.post(`http://192.168.47.78:3000/api/post-operation-data`, {
+      axios.post(`${BaseURL.baseURL}/post-operation-data`, {
         online: online,
         Monday: Monday,
         Tuesday: Tuesday,

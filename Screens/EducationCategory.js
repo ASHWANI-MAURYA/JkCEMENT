@@ -2,7 +2,7 @@ import { View, Text, TextInput, StyleSheet, Alert, Pressable, ScrollView, Button
 import React, { useEffect, useState, useFocusEffect } from 'react'
 import Dropdown from '../Component/dropdown';
 import axios from "axios";
-import Date from '../Component/dateinput';
+import BaseURL from '../config';
 import { colors } from '../Component/colors'
 const EducationCategory = ({ route, props, navigation }) => {
     const [NameApplicant, setNameApplicant] = useState("");
@@ -52,8 +52,7 @@ const EducationCategory = ({ route, props, navigation }) => {
 
             try {
                 //get  Data by api
-                axios.get(`
-http://192.168.47.78:3000/api/getById-form1Data/` + edit_id, {
+                axios.get(`${BaseURL.baseURL}/getById-form1Data/` + edit_id, {
                 })
                     .then(res => {
                         // debugger;
@@ -75,8 +74,7 @@ http://192.168.47.78:3000/api/getById-form1Data/` + edit_id, {
         }
         try {
             //get  Data by api
-            axios.get(`
-http://192.168.47.78:3000/api/getAll-AwardCategory`, {
+            axios.get(`${BaseURL.baseURL}/getAll-AwardCategory`, {
             })
                 .then(res => {
                     debugger;
@@ -133,8 +131,7 @@ http://192.168.47.78:3000/api/getAll-AwardCategory`, {
         // navigation.navigate('AdminPanal');
         //Save Data by api
         // debugger;
-        axios.patch(`
-http://192.168.47.78:3000/api/post-form1UpdateData/`, {
+        axios.patch(`${BaseURL.baseURL}/post-form1UpdateData/`, {
             _id: edit_id,
             dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
             NameApplicant: NameApplicant,
@@ -183,8 +180,7 @@ http://192.168.47.78:3000/api/post-form1UpdateData/`, {
         //debugger;
         try {
             //Save Data by api
-            axios.post(`
-            http://192.168.47.78:3000/api/post-form1-data`, {
+            axios.post(`${BaseURL.baseURL}/post-form1-data`, {
                 dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
                 NameApplicant: NameApplicant,
                 CertificateNumber: CertificateNumber

@@ -54,7 +54,7 @@ const DocumentsDetails = ({ navigation }) => {
             });
             bodyFormData.append('IdType', String(dataAwardCategorySelectionId.value));
 
-            setIsNextDisabled(false);
+            setIsNextDisabled(true);
 
             // return;
 
@@ -70,7 +70,7 @@ const DocumentsDetails = ({ navigation }) => {
                     setIsNextDisabled(false);
                     //handle success
                     Alert.alert("Document Upload Status", response.data.Message);
-                    // console.log(bodyFormData);    
+                    navigation.navigate('PackageSelection')
                 })
                 .catch(function (error) {
                     // setNext(false);
@@ -109,16 +109,13 @@ const DocumentsDetails = ({ navigation }) => {
                     <Pressable onPress={() => navigation.navigate('OperationDetails')} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  ><Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Previous </Text></Pressable>
                 </View>
                 <View style={{ marginHorizontal: 30, justifyContent: 'center', marginTop: 0, width: '30%' }}>
-                    <Pressable onPress={
-                        // () => navigation.navigate('PackageSelection')
-                        submitform
-                    } style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  >
-                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>
-                            <ActivityIndicator animating={IsNextDisabled}
-                                color='white'
-
-                            />
-                            {IsNextDisabled ? " Wait..." : "Next"}</Text>
+                    <Pressable onPress={submitform} style={{ backgroundColor: colors.colors.headColor, padding: 6, marginVertical: 5, borderRadius: 4, textAlign: 'center' }}  >
+                        <View style={{ justifyContent: 'space-evenly',flexDirection:'row' }}>
+                            <ActivityIndicator animating={IsNextDisabled} color='white' />
+                            <Text style={{ color: 'white', textAlign: 'center', fontSize: 18, paddingHorizontal: 5 }}>
+                                {IsNextDisabled ? " Wait..." : "Next      "}
+                            </Text>
+                        </View>
                     </Pressable>
 
                 </View>

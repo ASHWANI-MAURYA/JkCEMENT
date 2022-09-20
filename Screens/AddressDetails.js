@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert } from 
 import React, { useState } from 'react'
 import { colors } from '../Component/colors'
 import axios from "axios";
+import BaseURL from '../config';
 const AddressDetails = ({ navigation }) => {
     const [City, setCity] = useState();
     const [State, setState] = useState();
@@ -16,8 +17,7 @@ const AddressDetails = ({ navigation }) => {
     function submitform() {
         try {
             //Save Data by api
-            axios.post(`
-            http://192.168.47.78:3000/api/post-AddressDetails-data`, {
+            axios.post(`${BaseURL.baseURL}/post-AddressDetails-data`, {
                 City: City,
                 State: State,
                 Address: Address,

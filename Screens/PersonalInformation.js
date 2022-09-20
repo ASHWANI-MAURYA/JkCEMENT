@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert } from 'react-native'
 import { colors } from '../Component/colors';
 import axios from "axios";
-
+import BaseURL from '../config';
 const PersonalInformation = ({ navigation }) => {
     const [Email, setEmail] = useState();
     const [AltEmail, SetAltEmail] = useState();
@@ -14,8 +14,7 @@ const PersonalInformation = ({ navigation }) => {
 
         try {
             //Save Data by api
-            axios.post(`
-            http://192.168.47.78:3000/api/post-form1-data`, {
+            axios.post(`${BaseURL.baseURL}/post-form1-data`, {
                 Email: Email,
                 AltEmail: AltEmail,
                 Mobile: Mobile
