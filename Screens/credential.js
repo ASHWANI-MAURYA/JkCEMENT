@@ -1,8 +1,8 @@
 import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native'
+import BaseURL from '../config';
 import { colors } from '../Component/colors'
 import React, { useState } from 'react'
 import axios from "axios";
-import BaseURL from '../config';
 const Credential = ({ navigation }) => {
     const [Email, setEmail] = useState("");
     const [isEmail, setisEmail] = useState("");
@@ -19,14 +19,14 @@ const Credential = ({ navigation }) => {
             setisEmail("");
         }
 
-        if (isPassword == "") {
+        if (Password == "") {
             setisPassword("false");
             return;
         }
         else {
             setisPassword("");
         }
-        if (isRePassword == "") {
+        if (RePassword == "") {
             setisRePassword("false");
             return;
         }
@@ -37,13 +37,12 @@ const Credential = ({ navigation }) => {
             try {
 
                 //Save Data by api
-                axios.post(`${BaseURL.baseURL}/post-credential-data`, {
+                axios.post(`${BaseURL.BASE_URL}/post-credential-data`, {
                     Email: Email,
                     Password: Password,
                     RePassword: RePassword
                 })
                     .then(res => {
-                        debugger;
                         let userInfo = res.data;
                         Alert.alert(
                             "Credential Data",

@@ -3,18 +3,53 @@ import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert } from 
 import { colors } from '../Component/colors';
 import axios from "axios";
 import BaseURL from '../config';
+import Spinner from 'react-native-loading-spinner-overlay';
 const PersonalInformation = ({ navigation }) => {
-    const [Email, setEmail] = useState();
-    const [AltEmail, SetAltEmail] = useState();
-    const [Mobile, setMobile] = useState();
-    const [] = useState();
+    const [Email, setEmail] = useState("");
+    const [AltEmail, SetAltEmail] = useState("");
+    const [Mobile, setMobile] = useState("");
+    const [IsEmail, setISEmail] = useState("");
+    const [IsAltEmail, SetIsAltEmail] = useState("");
+    const [IsMobile, setIsMobile] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    // const [] = useState();
     function funcSubmitData() {
         //Validation.....
         //#region This Code is used for validation perpose only
+        if (!Email || Email.value == "") {
+            setISEmail("false");
+            return;
+        }
+        else {
+            setISEmail("");
+        }
 
+        if (AltEmail == "") {
+            SetIsAltEmail("false");
+            return;
+        }
+        else {
+            SetIsAltEmail("");
+        }
+        if (Mobile == "") {
+            setIsMobile("false");
+            return;
+        }
+        else {
+            setIsMobile("");
+        }
+        if (Mobile.length < 10) {
+            Alert.alert("", 'Enter a Valid Mobile Number', [
+                { text: "OK"  },
+            ]
+            );
+            return;
+        }
+
+        setIsLoading(true);
         try {
             //Save Data by api
-            axios.post(`${BaseURL.baseURL}/post-form1-data`, {
+            axios.post(`${BaseURL.BASE_URL}/post-form1-data`, {
                 Email: Email,
                 AltEmail: AltEmail,
                 Mobile: Mobile
@@ -23,7 +58,7 @@ const PersonalInformation = ({ navigation }) => {
                     debugger;
                     let userInfo = res.data;
                     Alert.alert(
-                        "Form (1)",
+                        "Personal Information",
                         userInfo.Message,
                         [
 
@@ -43,22 +78,38 @@ const PersonalInformation = ({ navigation }) => {
     };
     return (
         <ScrollView>
+            <Spinner visible={isLoading} textContent={'Please Wait ..'}
+                textStyle={{ color: colors.colors.white, fontWeight: '400' }} />
             <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 20 }}>
                 <View style={style.ViewBok}>
                     <View style={{ paddingVertical: 10 }}>
                         <Text style={{ fontWeight: '400', fontSize: 20 }}>Email</Text>
-                        <TextInput placeholder='Email' keyboardType={'email-address'} value={Email} onChangeText={setEmail} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
-                        {/* <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
+                        <TextInput placeholder='Email' autoFocus={true} keyboardType={'email-address'} value={Email} onChangeText={setEmail} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                        <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
                             {
-                                isEmail == "false"
-                                    ? "email is Required*"
+                                IsEmail == "false"
+                                    ? "Email is Required !"
                                     : ''
                             }
-                        </Text> */}
+                        </Text>
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Alter Email No</Text>
                         <TextInput placeholder='Alter Email No' value={AltEmail} onChangeText={SetAltEmail} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                        <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
+                            {
+                                IsAltEmail == "false"
+                                    ? "Alter Email is Required !"
+                                    : ''
+                            }
+                        </Text>
                         <Text style={{ fontWeight: '400', fontSize: 20, marginTop: 5 }}>Mobile No</Text>
-                        <TextInput placeholder='Mobile No' value={Mobile} onChangeText={setMobile} style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                        <TextInput placeholder='Mobile No' maxLength={10} keyboardType='number-pad' value={Mobile} onChangeText={setMobile}  style={{ borderWidth: 1, borderColor: 'black', marginTop: 10, padding: 10, borderRadius: 4 }} />
+                        <Text style={{ fontWeight: '400', fontSize: 15, color: 'red' }}>
+                            {
+                                IsMobile == "false"
+                                    ? "Mobile No is Required !"
+                                    : ''
+                            }
+                        </Text>
                     </View>
                 </View>
             </View>

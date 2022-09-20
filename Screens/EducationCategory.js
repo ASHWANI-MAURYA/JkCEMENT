@@ -1,6 +1,7 @@
 import { View, Text, TextInput, StyleSheet, Alert, Pressable, ScrollView, Button } from 'react-native'
 import React, { useEffect, useState, useFocusEffect } from 'react'
 import Dropdown from '../Component/dropdown';
+import Spinner from 'react-native-loading-spinner-overlay';
 import axios from "axios";
 import BaseURL from '../config';
 import { colors } from '../Component/colors'
@@ -8,6 +9,7 @@ const EducationCategory = ({ route, props, navigation }) => {
     const [NameApplicant, setNameApplicant] = useState("");
     const [CertificateNumber, setCertificateNumber] = useState("");
     const [dataAwardCategorySelectionId, setdataAwardCategorySelectionId] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     let [isValidAwardCategory, setIsValidAwardCategory] = useState(null);
     let [isNameisValidate, setIsNameisValidate] = useState(null);
     let [IsCertificatenumber, setIsCertificatenumber] = useState(null);
@@ -52,7 +54,7 @@ const EducationCategory = ({ route, props, navigation }) => {
 
             try {
                 //get  Data by api
-                axios.get(`${BaseURL.baseURL}/getById-form1Data/` + edit_id, {
+                axios.get(`${BaseURL.BASE_URL}/getById-form1Data/` + edit_id, {
                 })
                     .then(res => {
                         // debugger;
@@ -74,7 +76,7 @@ const EducationCategory = ({ route, props, navigation }) => {
         }
         try {
             //get  Data by api
-            axios.get(`${BaseURL.baseURL}/getAll-AwardCategory`, {
+            axios.get(`${BaseURL.BASE_URL}/getAll-AwardCategory`, {
             })
                 .then(res => {
                     debugger;
@@ -131,7 +133,7 @@ const EducationCategory = ({ route, props, navigation }) => {
         // navigation.navigate('AdminPanal');
         //Save Data by api
         // debugger;
-        axios.patch(`${BaseURL.baseURL}/post-form1UpdateData/`, {
+        axios.patch(`${BaseURL.BASE_URL}/post-form1UpdateData/`, {
             _id: edit_id,
             dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
             NameApplicant: NameApplicant,
@@ -151,6 +153,7 @@ const EducationCategory = ({ route, props, navigation }) => {
             });
     }
     function funcSubmitData() {
+        setIsLoading(true);
         //Validation.....
         //#region This Code is used for validation perpose only
         if (!dataAwardCategorySelectionId || dataAwardCategorySelectionId.value == "") {
@@ -180,7 +183,7 @@ const EducationCategory = ({ route, props, navigation }) => {
         //debugger;
         try {
             //Save Data by api
-            axios.post(`${BaseURL.baseURL}/post-form1-data`, {
+            axios.post(`${BaseURL.BASE_URL}/post-form1-data`, {
                 dataAwardCategorySelectionId: dataAwardCategorySelectionId.label,
                 NameApplicant: NameApplicant,
                 CertificateNumber: CertificateNumber
@@ -210,6 +213,8 @@ const EducationCategory = ({ route, props, navigation }) => {
     return (
         <View style={{ flex: 1 }}>
             <ScrollView style={{ marginBottom: 10 }}>
+            <Spinner visible={isLoading} textContent={'Please Wait ..'}
+                textStyle={{color:colors.colors.white,fontWeight:'400'}} />
                 <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 5 }}>
                     <View style={style.ViewBok}>
                         <Text style={{ fontWeight: '600', fontSize: 20, marginTop: 10 }}>Education Category</Text>

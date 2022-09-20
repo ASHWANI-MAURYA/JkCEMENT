@@ -30,6 +30,7 @@
     "react-native-date-input": "^1.0.11",
     "react-native-datepicker": "^1.7.2",
     "react-native-element-dropdown": "^2.2.0",
+    "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-modal-datetime-picker": "^14.0.0",
     "react-native-paper": "^4.12.4",
     "react-native-pie-chart": "^2.0.2",
