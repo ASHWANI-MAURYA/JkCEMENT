@@ -4,7 +4,8 @@ import Dropdown from '../Component/dropdown';
 import Imagepick from '../Component/imagepick';
 import { colors } from '../Component/colors'
 import axios from "axios";
-import BaseURL from '../config';
+import config from '../config';
+
 // import { RNCamera } from 'react-native-camera'
 const DocumentsDetails = ({ navigation }) => {
     const [image1, setimage1] = useState("");
@@ -54,13 +55,16 @@ const DocumentsDetails = ({ navigation }) => {
             });
             bodyFormData.append('IdType', String(dataAwardCategorySelectionId.value));
 
+<<<<<<< HEAD
+            setIsNextDisabled(true);
+=======
+>>>>>>> f72abc72f6bd0b53afaaca897f24b1f204d30170
+
             setIsNextDisabled(true);
 
-            // return;
 
+            axios.post(`${config.BASE_URL}/post-document`, bodyFormData, {
 
-            // axios.post(`http://192.168.221.78:3000/api/post-document`, bodyFormData, {
-            axios.post(`${BaseURL.baseURL}/post-document`, bodyFormData, {
                 headers: { "Content-Type": "multipart/form-data" },
                 Accept: "application/json",
 
