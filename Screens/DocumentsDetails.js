@@ -55,11 +55,6 @@ const DocumentsDetails = ({ navigation }) => {
             });
             bodyFormData.append('IdType', String(dataAwardCategorySelectionId.value));
 
-<<<<<<< HEAD
-            setIsNextDisabled(true);
-=======
->>>>>>> f72abc72f6bd0b53afaaca897f24b1f204d30170
-
             setIsNextDisabled(true);
 
 
